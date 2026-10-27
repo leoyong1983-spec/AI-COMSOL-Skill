@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "project_id": "public-eg-research",
+  "case_id": "project_eg_inputs_pending",
+  "data_status": "project-research",
+  "purpose": "乙二醇电解方向已选定；补齐具体反应、几何及有来源的输入后运行，当前为空白模板",
+  "reaction_pair_status": "Illustrative research configuration; not a frozen engineering design",
+  "parameter_source": null,
+  "kinetic_mode": "tafel",
+  "current_A": null,
+  "temperature_K": null,
+  "anode_reference_potential_V": null,
+  "cathode_reference_potential_V": null,
+  "ohmic_resistance_ohm": null,
+  "electrode_area_m2": {
+    "cathode": null,
+    "anode": null
+  },
+  "compartments": {
+    "cathode": {
+      "volume_m3": null,
+      "flow_m3_s": null,
+      "feed_mol_m3": null,
+      "initial_mol_m3": null
+    },
+    "anode": {
+      "volume_m3": null,
+      "flow_m3_s": null,
+      "feed_mol_m3": null,
+      "initial_mol_m3": null
+    }
+  },
+  "membrane": {
+    "carrier_species": null,
+    "carrier_direction": null,
+    "carrier_mol_per_mol_e": null,
+    "area_m2": null,
+    "neutral_permeability_m_s": {},
+    "model": null,
+    "source": null
+  },
+  "time": {
+    "stop_s": 600,
+    "output_step_s": 20,
+    "reference_max_step_s": 0.25
+  },
+  "solver": {
+    "relative_tolerance": 1e-07
+  },
+  "species": [],
+  "reactions": [],
+  "assumptions": [],
+  "provenance": {
+    "reaction_pair": null,
+    "reactor_geometry": null,
+    "electrolyte_speciation": null,
+    "kinetics_and_side_reactions": null,
+    "membrane": null,
+    "operating_conditions": null,
+    "electrode_potential_reference": null
+  },
+  "required_inputs_note": "不得将演示FF/EG配对、FE或Tafel系数自动复制为本项目值；先用实际反应式、实验极化/产物及膜数据填写。"
+}

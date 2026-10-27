@@ -1,0 +1,410 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-27",
+  "environment": {
+    "os": "Windows x64",
+    "python": "3.12.10",
+    "comsol": "6.4.0.429",
+    "dwsim": "9.0.5.0"
+  },
+  "scope": "Current public controllers executed locally; numerical verification of declared models only. Native files and private logs are intentionally not redistributed.",
+  "behavioral_tests": {
+    "count": 26,
+    "requires_comsol": false,
+    "command": "py -3.12 -B tools/validate_repo.py"
+  },
+  "zero_d": {
+    "run": "eg-0d-01",
+    "checks": {
+      "species_balance_max_abs_mol": 7.105427357601002e-15,
+      "element_balance_max_abs_mol_atoms": 1.3917686447761923e-14,
+      "bulk_charge_max_abs_mol_charge_m3": 1.4248324742283103e-13,
+      "electrode_current_max_abs_residual_A": 6.938893903907228e-18,
+      "minimum_liquid_concentration_mol_m3": 0.0
+    },
+    "independent_reference_agreement": {
+      "state_max_scaled_difference": 8.442757932322399e-14,
+      "native_current_max_scaled_difference": 0.0,
+      "limit": 5e-05
+    },
+    "save_reopen_max_scaled_difference": 0.0,
+    "native_model_sha256": "747175ff10bc9ad633bb6e22a474caf2105ecddfb5f79fd025c1ff982cc4418a"
+  },
+  "spatial_runs": [
+    {
+      "run": "eg-2d-01",
+      "case_id": "pdnimoo4_spatial_literature_proxy",
+      "status": "native-spatial-solve-and-readback-passed",
+      "dimension": 2,
+      "flow_model": "fully-developed-poiseuille",
+      "metrics": {
+        "Qin_m3_s": 6.666666666666666e-07,
+        "Qout_m3_s": 6.6666666666667e-07,
+        "I_anode_A": 0.07332586133701142,
+        "I_cathode_A": -0.07332586133701142,
+        "EG_surface_min_mol_m3": 882.8441402737604,
+        "EG_surface_max_mol_m3": 1000.0,
+        "j_anode_min_A_m2": 729.3591918509359,
+        "j_anode_max_A_m2": 747.9981210386825,
+        "pressure_drop_Pa": 11.200000000000369,
+        "EG_consumption_mol_s": 1.7574283118075136e-07,
+        "GLY_generation_mol_s": 1.5199379994010923e-07,
+        "FMA_generation_mol_s": 3.799844998502732e-08,
+        "OX_generation_mol_s": 4.7498062481284135e-09,
+        "EG_net_boundary_out_mol_s": -1.751829427970586e-07,
+        "GLY_net_boundary_out_mol_s": 1.5149976044294307e-07,
+        "FMA_net_boundary_out_mol_s": 3.78731244792023e-08,
+        "OX_net_boundary_out_mol_s": 4.73436751414719e-09
+      },
+      "checks": {
+        "flow_relative_residual": 5.082197683525803e-15,
+        "current_relative_residual": 0.0,
+        "save_reopen_max_scaled_difference": 0.0,
+        "EG_mass_relative_residual": 0.0031858391032571643,
+        "GLY_mass_relative_residual": 0.0032503924328546895,
+        "FMA_mass_relative_residual": 0.0032981741590617673,
+        "OX_mass_relative_residual": 0.0032503923685954597,
+        "carbon_relative_residual": 6.971891988349057e-05
+      },
+      "field_checks": {
+        "exported_points": 1025,
+        "species_min_mol_m3": {
+          "EG": 882.8441402737604,
+          "GLY": -0.00020781402292501146,
+          "FMA": -6.950905009823884e-06,
+          "OX": -6.494188252644438e-06
+        },
+        "species_max_mol_m3": {
+          "EG": 1000.0000000137461,
+          "GLY": 117.52392279803036,
+          "FMA": 20.255841136542607,
+          "OX": 3.67262258744167
+        }
+      },
+      "mesh": {
+        "axial_elements": 40,
+        "gap_elements": 24,
+        "span_elements": 10,
+        "gap_ratio": 20
+      },
+      "native_model_sha256": "e6826abda6b67f5003c2e306984a6579415a7480738282fbddfcbc22368036a8",
+      "source_java_sha256": "55cefedd54504995af59e7c6528feac7589cd507a12d5e10112c247fed2357f5",
+      "native_plot_status": "saved"
+    },
+    {
+      "run": "eg-2d-fine",
+      "case_id": "pdnimoo4_spatial_literature_proxy",
+      "status": "native-spatial-solve-and-readback-passed",
+      "dimension": 2,
+      "flow_model": "fully-developed-poiseuille",
+      "metrics": {
+        "Qin_m3_s": 6.666666666666662e-07,
+        "Qout_m3_s": 6.666666666667012e-07,
+        "I_anode_A": 0.07332340888663935,
+        "I_cathode_A": -0.07332340888663935,
+        "EG_surface_min_mol_m3": 882.7574627984058,
+        "EG_surface_max_mol_m3": 1000.0,
+        "j_anode_min_A_m2": 729.3521557209211,
+        "j_anode_max_A_m2": 748.0925192191388,
+        "pressure_drop_Pa": 11.200000000000335,
+        "EG_consumption_mol_s": 1.7573695330132561e-07,
+        "GLY_generation_mol_s": 1.5198871636871418e-07,
+        "FMA_generation_mol_s": 3.7997179092178546e-08,
+        "OX_generation_mol_s": 4.749647386522318e-09,
+        "EG_net_boundary_out_mol_s": -1.7540016312975193e-07,
+        "GLY_net_boundary_out_mol_s": 1.5169456333618056e-07,
+        "FMA_net_boundary_out_mol_s": 3.792379386848323e-08,
+        "OX_net_boundary_out_mol_s": 4.74045510425705e-09
+      },
+      "checks": {
+        "flow_relative_residual": 5.256898228897005e-14,
+        "current_relative_residual": 0.0,
+        "save_reopen_max_scaled_difference": 0.0,
+        "EG_mass_relative_residual": 0.0019164448071215495,
+        "GLY_mass_relative_residual": 0.0019353609896936618,
+        "FMA_mass_relative_residual": 0.0019313334686580149,
+        "OX_mass_relative_residual": 0.0019353609893972478,
+        "carbon_relative_residual": 1.848077488365568e-05
+      },
+      "field_checks": {
+        "exported_points": 2257,
+        "species_min_mol_m3": {
+          "EG": 882.7574627984058,
+          "GLY": -0.006594212483471495,
+          "FMA": -0.002334897587133008,
+          "OX": -0.0002060691385683322
+        },
+        "species_max_mol_m3": {
+          "EG": 1000.0084113160548,
+          "GLY": 117.60498015837987,
+          "FMA": 20.272631696939197,
+          "OX": 3.675155630033083
+        }
+      },
+      "mesh": {
+        "axial_elements": 60,
+        "gap_elements": 36,
+        "span_elements": 15,
+        "gap_ratio": 20
+      },
+      "native_model_sha256": "0c29509080e22f7fd8e368325958f2726faa4ccf7a37c5afccec6b2df180c63f",
+      "source_java_sha256": "715c280256f5b6e460732f9707460f539437f66f780bbfce5389061fd26605a7",
+      "native_plot_status": "saved"
+    },
+    {
+      "run": "eg-3d-coarse",
+      "case_id": "pdnimoo4_spatial_literature_proxy",
+      "status": "native-spatial-solve-and-readback-passed",
+      "dimension": 3,
+      "flow_model": "fully-developed-poiseuille",
+      "metrics": {
+        "Qin_m3_s": 6.666666666666671e-07,
+        "Qout_m3_s": 6.666666666666666e-07,
+        "I_anode_A": 0.0733110732868259,
+        "I_cathode_A": -0.07331107328603421,
+        "EG_surface_min_mol_m3": 780.1135556658019,
+        "EG_surface_max_mol_m3": 1000.0,
+        "j_anode_min_A_m2": 705.5951523237587,
+        "j_anode_max_A_m2": 748.7339465553611,
+        "pressure_drop_Pa": 11.9583985907643,
+        "EG_consumption_mol_s": 1.7570738810841824e-07,
+        "GLY_generation_mol_s": 1.519631464721452e-07,
+        "FMA_generation_mol_s": 3.799078661803631e-08,
+        "OX_generation_mol_s": 4.748848327254537e-09,
+        "EG_net_boundary_out_mol_s": -1.7559856501096933e-07,
+        "GLY_net_boundary_out_mol_s": 1.5186543622113593e-07,
+        "FMA_net_boundary_out_mol_s": 3.7967133360980896e-08,
+        "OX_net_boundary_out_mol_s": 4.745794881910498e-09
+      },
+      "checks": {
+        "flow_relative_residual": 7.94093388050906e-16,
+        "current_relative_residual": 1.079899837197798e-11,
+        "save_reopen_max_scaled_difference": 0.0,
+        "EG_mass_relative_residual": 0.0006193427528599625,
+        "GLY_mass_relative_residual": 0.0006429864955919624,
+        "FMA_mass_relative_residual": 0.0006226050882606522,
+        "OX_mass_relative_residual": 0.0006429864955919624,
+        "carbon_relative_residual": 2.1440347346863777e-05
+      },
+      "field_checks": {
+        "exported_points": 5301,
+        "species_min_mol_m3": {
+          "EG": 780.1135556658019,
+          "GLY": -2.9419602947724264e-06,
+          "FMA": -0.0011037585986621904,
+          "OX": -9.19362592116379e-08
+        },
+        "species_max_mol_m3": {
+          "EG": 1000.0019150358032,
+          "GLY": 224.59848696082136,
+          "FMA": 36.966283111567186,
+          "OX": 7.018702717525665
+        }
+      },
+      "mesh": {
+        "axial_elements": 30,
+        "gap_elements": 18,
+        "span_elements": 8,
+        "gap_ratio": 20
+      },
+      "native_model_sha256": "b4d4e75bd10308936a850a3be65e8fb82f63cfe72d80c8238e3f2c67965baf40",
+      "source_java_sha256": "1347519387a58da3535c482538b438c985f227735b5decaa4247fb78c2c5ab5e",
+      "native_plot_status": "saved"
+    },
+    {
+      "run": "eg-3d-01",
+      "case_id": "pdnimoo4_spatial_literature_proxy",
+      "status": "native-spatial-solve-and-readback-passed",
+      "dimension": 3,
+      "flow_model": "fully-developed-poiseuille",
+      "metrics": {
+        "Qin_m3_s": 6.666666666666703e-07,
+        "Qout_m3_s": 6.666666666666638e-07,
+        "I_anode_A": 0.07331032146944143,
+        "I_cathode_A": -0.07331032146861023,
+        "EG_surface_min_mol_m3": 784.0570028173979,
+        "EG_surface_max_mol_m3": 1000.0,
+        "j_anode_min_A_m2": 706.6196501412732,
+        "j_anode_max_A_m2": 748.82917039139,
+        "pressure_drop_Pa": 11.955177254397876,
+        "EG_consumption_mol_s": 1.7570558619960652e-07,
+        "GLY_generation_mol_s": 1.519615880645248e-07,
+        "FMA_generation_mol_s": 3.79903970161312e-08,
+        "OX_generation_mol_s": 4.7487996270164e-09,
+        "EG_net_boundary_out_mol_s": -1.7564017287439136e-07,
+        "GLY_net_boundary_out_mol_s": 1.5190237890215166e-07,
+        "FMA_net_boundary_out_mol_s": 3.797727042713953e-08,
+        "OX_net_boundary_out_mol_s": 4.746949340692239e-09
+      },
+      "checks": {
+        "flow_relative_residual": 9.687939334221006e-15,
+        "current_relative_residual": 1.1338051809085488e-11,
+        "save_reopen_max_scaled_difference": 0.0,
+        "EG_mass_relative_residual": 0.0003722893883456212,
+        "GLY_mass_relative_residual": 0.00038963242703155367,
+        "FMA_mass_relative_residual": 0.000345523869784788,
+        "OX_mass_relative_residual": 0.00038963242703155367,
+        "carbon_relative_residual": 1.257454600897346e-05
+      },
+      "field_checks": {
+        "exported_points": 11275,
+        "species_min_mol_m3": {
+          "EG": 784.0570028173979,
+          "GLY": -0.0017474084355369862,
+          "FMA": -0.0007024144507257563,
+          "OX": -5.46065136105312e-05
+        },
+        "species_max_mol_m3": {
+          "EG": 1000.002565531514,
+          "GLY": 220.73587485674264,
+          "FMA": 36.31967502542779,
+          "OX": 6.897996089273204
+        }
+      },
+      "mesh": {
+        "axial_elements": 40,
+        "gap_elements": 24,
+        "span_elements": 10,
+        "gap_ratio": 20
+      },
+      "native_model_sha256": "b76872aa4ea6e3b0708cc1d8031646eda7b3f4b1fd63913c1d0da865db023b1c",
+      "source_java_sha256": "0f4d679f5d4a16930ba8028b4024d7a54910cc065e0370b118446a43493fadd9",
+      "native_plot_status": "saved"
+    }
+  ],
+  "analytic_checks": {
+    "2": {
+      "status": "independent-analytic-check-computed",
+      "fields": {
+        "exported_points": 1025,
+        "species_min_mol_m3": {
+          "EG": 882.8441402737604,
+          "GLY": -0.00020781402292501146,
+          "FMA": -6.950905009823884e-06,
+          "OX": -6.494188252644438e-06
+        },
+        "species_max_mol_m3": {
+          "EG": 1000.0000000137461,
+          "GLY": 117.52392279803036,
+          "FMA": 20.255841136542607,
+          "OX": 3.67262258744167
+        }
+      },
+      "velocity_max_abs_error_m_s": 5.370703881624195e-15,
+      "velocity_max_error_relative_to_mean": 8.056055822436292e-14,
+      "pressure_drop_analytic_Pa": 11.2,
+      "pressure_drop_relative_error": 3.298948416029037e-14,
+      "analytic_basis": "2D Poiseuille parabola or3D rectangular-duct Fourier series,160terms limit; independent of native scalar PDE discretization",
+      "engineering_acceptance": "not-assessed"
+    },
+    "3": {
+      "status": "independent-analytic-check-computed",
+      "fields": {
+        "exported_points": 11275,
+        "species_min_mol_m3": {
+          "EG": 784.0570028173979,
+          "GLY": -0.0017474084355369862,
+          "FMA": -0.0007024144507257563,
+          "OX": -5.46065136105312e-05
+        },
+        "species_max_mol_m3": {
+          "EG": 1000.002565531514,
+          "GLY": 220.73587485674264,
+          "FMA": 36.31967502542779,
+          "OX": 6.897996089273204
+        }
+      },
+      "velocity_max_abs_error_m_s": 0.0001321960459252855,
+      "velocity_max_error_relative_to_mean": 0.0019829406888792825,
+      "pressure_drop_analytic_Pa": 11.953359114852255,
+      "pressure_drop_relative_error": 0.00015210281295425216,
+      "analytic_basis": "2D Poiseuille parabola or3D rectangular-duct Fourier series,160terms limit; independent of native scalar PDE discretization",
+      "engineering_acceptance": "not-assessed"
+    }
+  },
+  "mesh_comparisons": {
+    "2": {
+      "status": "mesh-comparison-within-declared-limits",
+      "relative_limit": 0.02,
+      "differences": {
+        "I_anode_A": 3.344703157302132e-05,
+        "EG_surface_min_mol_m3": 9.81894563427611e-05,
+        "j_anode_max_A_m2": 0.00012618516831963076,
+        "GLY_generation_mol_s": 3.3447031572499755e-05,
+        "pressure_drop_Pa": 3.013462495411049e-15
+      },
+      "coarse_mesh": {
+        "axial_elements": 40,
+        "gap_elements": 24,
+        "span_elements": 10,
+        "gap_ratio": 20
+      },
+      "fine_mesh": {
+        "axial_elements": 60,
+        "gap_elements": 36,
+        "span_elements": 15,
+        "gap_ratio": 20
+      },
+      "scope": "numerical convergence only; not experimental validation"
+    },
+    "3": {
+      "status": "mesh-comparison-within-declared-limits",
+      "relative_limit": 0.02,
+      "differences": {
+        "I_anode_A": 1.0255273328547835e-05,
+        "EG_surface_min_mol_m3": 0.0050295413948550005,
+        "j_anode_max_A_m2": 0.00012716363063042152,
+        "GLY_generation_mol_s": 1.0255273324183591e-05,
+        "pressure_drop_Pa": 0.0002694511589311147
+      },
+      "coarse_mesh": {
+        "axial_elements": 30,
+        "gap_elements": 18,
+        "span_elements": 8,
+        "gap_ratio": 20
+      },
+      "fine_mesh": {
+        "axial_elements": 40,
+        "gap_elements": 24,
+        "span_elements": 10,
+        "gap_ratio": 20
+      },
+      "scope": "numerical convergence only; not experimental validation"
+    }
+  },
+  "dwsim": {
+    "rows": 12,
+    "positive_reference_values": 36,
+    "Cp_status": "native zero rejected; null retained",
+    "boundary": "reference properties only; no electrolyte salts or activities; not KOH electrolyte validation"
+  },
+  "source_sha256": {
+    "skills/ai-comsol-skill/scripts/comsol_native.py": "c6a3f208df212b9963b18c2701ff4227670fe90dd8f2c258e73b0648f7984da7",
+    "skills/ai-comsol-skill/scripts/DwsimProperties.cs": "f15d822ecf9a2af725c10377fc5bce8fa6f166282bef2e110450b60b994a7903",
+    "skills/ai-comsol-skill/scripts/electrosynthesis.py": "33ada5185942a41798ce97e4c9f74a5bce7df631a98d3e77dee9144f44d024fe",
+    "skills/ai-comsol-skill/scripts/reaction_core.py": "f7d8e2bb2ba6368f1bb982bf39c779b5241ba5298d3cc1ca0e1487c4f2c16dcd",
+    "skills/ai-comsol-skill/scripts/run_dwsim_properties.py": "b3f6dc5597d60ad6ce7e128a1c388a7ff447a0f1e1dd8daa91dff79697cd580c",
+    "skills/ai-comsol-skill/scripts/spatial_reactor.py": "33d464dc6d96950de55fcba5ae074ba4ed8ddbc51f5402b47ba60dd3f5d4b14f",
+    "skills/ai-comsol-skill/scripts/spatial_review.py": "82fed9b0e692de3188a01df50062fc59f787386fd908bb334c2b8ab1c51a67de",
+    "skills/ai-comsol-skill/scripts/test_reaction_model.py": "2c2d94d058361e11bf3c9a00e0a2ff17a5f0a4e4a10161c74fc4536a33596db6",
+    "skills/ai-comsol-skill/scripts/test_spatial_inputs.py": "914cce0be92b492d89d98a7733c6202fee241808cd17305acec96c5f0e78d264",
+    "skills/ai-comsol-skill/scripts/test_workspace.py": "88f664129a9497805cf2469df3b6bce404a000e6fa77b286b3226af2894d7bfe",
+    "skills/ai-comsol-skill/scripts/workspace.py": "7bc26fbd73f722747bf06e3798ea55a628e36a557fab9ee8a76f750dda79594d",
+    "skills/ai-comsol-skill/assets/demo_eg_her.json": "bbbe283d802768aec1cd2c7d0717d192edba286c0a07e5bb0d6334b9eb2e5ffa",
+    "skills/ai-comsol-skill/assets/demo_kinetic.json": "99ac8ebe84d898ff213e92bd2edee8d3a2c27917bccd14c00671a4a00c63ab76",
+    "skills/ai-comsol-skill/assets/literature_eg_equivalent.json": "96bd427dc1e8176339aee13321daedc64c63aa2750773ac4d49fc6837a48cff4",
+    "skills/ai-comsol-skill/assets/project_input_template.json": "2311dab528a2b268809ae31285fac0ca472210177fdc21bccd269491488c6234",
+    "skills/ai-comsol-skill/assets/reaction_library.json": "c5e1cb164d876daca1af905fe92d0370d853154a1ce302d3e04936af73955635",
+    "skills/ai-comsol-skill/assets/spatial_pdnimoo4.json": "beb3ee9ff495eeb77227c617ce6f051b624a4e9e259cf3dc3a0e44d493063d88"
+  },
+  "engineering_acceptance": "not-assessed",
+  "experimental_calibration": "not-performed",
+  "limitations": [
+    "single isothermal membrane-free planar-channel baseline",
+    "assumed gap, HER parameters, FE split and several transport properties",
+    "apparent iR-uncorrected anode proxy, possible double-counting of source ohmic loss",
+    "no bubbles, porous interior, ion migration or spatial base depletion",
+    "passive dilute-product approximation requires reassessment at high local concentration",
+    "two mesh levels per dimension only; no guarantee for changed geometries or parameters"
+  ]
+}

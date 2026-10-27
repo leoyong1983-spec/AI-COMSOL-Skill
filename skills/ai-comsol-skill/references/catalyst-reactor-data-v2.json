@@ -1,0 +1,336 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-26",
+  "purpose": "可用于空间情景的催化剂/反应器/动力学证据，非项目设计冻结",
+  "sources": [
+    {
+      "id": "S24",
+      "doi": "10.1038/s41467-024-47179-7",
+      "url": "https://www.nature.com/articles/s41467-024-47179-7",
+      "title": "Pd/NiMoO4/NF electrocatalysts for the efficient and ultra-stable synthesis and electrolyte-assisted extraction of glycolate",
+      "kind": "primary-experiment",
+      "grade": "B",
+      "access": "publisher-indexed Results/Methods and figure descriptions read; direct page/PDF fetch encountered redirect error",
+      "license": "CC BY 4.0 stated by publisher",
+      "catalyst": "Pd/NiMoO4 on nickel foam",
+      "electrolyte": "1M NaOH +1M EG",
+      "data": [
+        {
+          "quantity": "anode_polarization_anchor",
+          "current_A_m2": 1000,
+          "potential_V_RHE": 0.79,
+          "locator": "Results, SupplementaryFig13 discussion",
+          "basis": "geometric-area current; all curves without iR compensation"
+        },
+        {
+          "quantity": "apparent_Tafel_slope",
+          "value": 0.2077,
+          "unit": "V/dec",
+          "locator": "Fig4b"
+        },
+        {
+          "quantity": "membrane_free_flow_rate",
+          "value": 40,
+          "unit": "mL/min",
+          "area_cm2": 1,
+          "locator": "Fig6 and Membrane-free flow electrolyzer performance"
+        },
+        {
+          "quantity": "flow_two_electrode_polarization",
+          "cell_voltage_V": 1.2,
+          "current_A_m2": 1150,
+          "locator": "Fig6b",
+          "warning": "full-cell voltage, never use as anodevsRHE anchor"
+        }
+      ],
+      "boundary": "three-electrodeMethods also mentions immersed1x0.7cm2 versus nominal1x1cm2; use reported geometrical j and the separate flow-cell1cm2 consistently. No intrinsic iR-deembedded kinetics or exact channel gap.",
+      "relation_to_comsol_runtime": "adjacent chemistry/transport evidence; not proof of this implementation",
+      "adoption_decision": "parameter prior or bounded reference only; inspect per-source restrictions"
+    },
+    {
+      "id": "S26",
+      "doi": "10.1021/jacsau.5c01615",
+      "url": "https://pubs.acs.org/doi/10.1021/jacsau.5c01615",
+      "title": "Continuous Glycolic Acid Electrosynthesis Enabled by Ethylene Glycol-Mediated PET Valorization Using Nanoporous PdCu Catalysts",
+      "kind": "primary-experiment-and-CFD",
+      "grade": "B",
+      "access": "publisher/PMC indexed experiment and simulation sections read; direct ACS403 and PMCreCAPTCHA, no bypass",
+      "license": "not independently verified for redistribution; no full text bundled",
+      "catalyst": "nanoporousPdCu/C onGDE, NiMo/GDE cathode",
+      "data": [
+        {
+          "quantity": "anode_loading",
+          "value": 2,
+          "unit": "mg/cm2"
+        },
+        {
+          "quantity": "anode_footprint",
+          "length_cm": 1.5,
+          "width_cm": 0.67
+        },
+        {
+          "quantity": "simulation_operating_point",
+          "current_A_m2": 2000,
+          "EG_mol_m3": 1000,
+          "GA_FE": 0.9,
+          "flow_rates_mL_min": [
+            1,
+            20,
+            100
+          ]
+        },
+        {
+          "quantity": "flow_inlet_velocity",
+          "at100mLmin_m_s": 1.2556,
+          "at20mLmin_m_s": 0.25112,
+          "warning": "nozzle-specific; do not set these as mean velocity of a different rectangular cross-section"
+        }
+      ],
+      "boundary": "use as an independent reactor/transport precedent; no verified local Tafel constants extracted, do not merge withPd/NiMoO4 as one measured dataset",
+      "relation_to_comsol_runtime": "adjacent chemistry/transport evidence; not proof of this implementation",
+      "adoption_decision": "parameter prior or bounded reference only; inspect per-source restrictions"
+    },
+    {
+      "id": "S25",
+      "doi": "10.1038/s41467-025-58813-3",
+      "url": "https://www.nature.com/articles/s41467-025-58813-3",
+      "kind": "primary-experiment",
+      "grade": "B",
+      "catalyst": "mesoporousPdCu",
+      "data_boundary": "pulsed surface regeneration,0.10MEG+1MKOH,500mL,8mL/min internal circulation; existing0D equivalent-charge case retained. Pulsed kinetics not reproduced by stationary spatial case.",
+      "access": "Metadata or bounded excerpts; see evidence boundary. No full text redistributed.",
+      "license": "Publisher terms apply to original publication; factual metadata only here.",
+      "relation_to_comsol_runtime": "adjacent chemistry/transport evidence; not proof of this implementation",
+      "adoption_decision": "parameter prior or bounded reference only; inspect per-source restrictions"
+    },
+    {
+      "id": "S17",
+      "doi": "10.1007/s13738-017-1136-7",
+      "url": "https://link.springer.com/article/10.1007/s13738-017-1136-7",
+      "kind": "primary-experiment-abstract",
+      "grade": "B",
+      "catalyst": "Pd nanoparticles/carbon-ceramic electrode",
+      "data": [
+        {
+          "quantity": "EG_reaction_order",
+          "range": [
+            0.2,
+            0.4
+          ]
+        },
+        {
+          "quantity": "NaOH_reaction_order",
+          "value": 0.6
+        }
+      ],
+      "boundary": "only a prior for differentPd electrode; not measured onPd/NiMoO4. Reported8.9kJ/mol lowestEa isPt and MUST NOT be assigned toPd.",
+      "access": "Metadata or bounded excerpts; see evidence boundary. No full text redistributed.",
+      "license": "Publisher terms apply to original publication; factual metadata only here.",
+      "relation_to_comsol_runtime": "adjacent chemistry/transport evidence; not proof of this implementation",
+      "adoption_decision": "parameter prior or bounded reference only; inspect per-source restrictions"
+    },
+    {
+      "id": "SPt23",
+      "doi": "10.1002/smll.202303693",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37231558/",
+      "kind": "primary-experiment-abstract",
+      "grade": "B",
+      "catalyst": "Pt/gamma-NiOOH/NF",
+      "data_boundary": "primary abstract supports glycolateFE>90%,selectivity>90% and paired hydrogen. No numeric kinetic set adopted; no model ready claim.",
+      "access": "Metadata or bounded excerpts; see evidence boundary. No full text redistributed.",
+      "license": "Publisher terms apply to original publication; factual metadata only here.",
+      "relation_to_comsol_runtime": "adjacent chemistry/transport evidence; not proof of this implementation",
+      "adoption_decision": "parameter prior or bounded reference only; inspect per-source restrictions"
+    },
+    {
+      "id": "SPdNi23",
+      "doi": "10.1002/anie.202300094",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36656087/",
+      "kind": "primary-experiment-abstract",
+      "grade": "B",
+      "catalyst": "Pd-Ni(OH)2",
+      "data_boundary": "Primary PubMed abstract verified:600mA/cm2 at1.15VvsRHE,FE/selectivity>85%,stability>200h. Screening evidence only; no Tafel constants inferred from a single point.",
+      "access": "Metadata or bounded excerpts; see evidence boundary. No full text redistributed.",
+      "license": "Publisher terms apply to original publication; factual metadata only here.",
+      "relation_to_comsol_runtime": "adjacent chemistry/transport evidence; not proof of this implementation",
+      "adoption_decision": "parameter prior or bounded reference only; inspect per-source restrictions"
+    },
+    {
+      "id": "S19",
+      "doi": "10.1109/ACCESS.2019.2945773",
+      "url": "https://ieeexplore.ieee.org/document/8861070/",
+      "kind": "primary-electrolyte-measurement-adjacent",
+      "grade": "B",
+      "data_boundary": "indexed original text gives aqueous1MNaOH17.6S/m at20C, noEG. Erratum10.1109/ACCESS.2021.3124034 identified; corrected numerical table not independently accessed. Numeric use in currentcase is expressly a provisional engineering prior, not a verified electrolyte property.",
+      "access": "Metadata or bounded excerpts; see evidence boundary. No full text redistributed.",
+      "license": "Publisher terms apply to original publication; factual metadata only here.",
+      "relation_to_comsol_runtime": "adjacent chemistry/transport evidence; not proof of this implementation",
+      "adoption_decision": "parameter prior or bounded reference only; inspect per-source restrictions"
+    },
+    {
+      "id": "S66",
+      "doi": "10.1021/j100880a011",
+      "url": "https://pubs.acs.org/doi/10.1021/j100880a011",
+      "kind": "primary-diffusion-paper-metadata",
+      "grade": "C",
+      "data_boundary": "Glycol-water mutual diffusion measured overcomposition and25-70C; publisher403 prevented table verification. No secondary numeric diffusion datum promoted to primary measurement.",
+      "access": "Metadata or bounded excerpts; see evidence boundary. No full text redistributed.",
+      "license": "Publisher terms apply to original publication; factual metadata only here.",
+      "relation_to_comsol_runtime": "adjacent chemistry/transport evidence; not proof of this implementation",
+      "adoption_decision": "parameter prior or bounded reference only; inspect per-source restrictions"
+    },
+    {
+      "id": "SR26",
+      "doi": "10.26599/NR.2026.94909219",
+      "url": "https://www.sciopen.com/article/10.26599/NR.2026.94909219",
+      "kind": "review-background",
+      "grade": "C",
+      "data_boundary": "Review used for source discovery and pathway taxonomy; not a replacement for primary kinetic evidence. Full text is not redistributed.",
+      "access": "Metadata or bounded excerpts; see evidence boundary. No full text redistributed.",
+      "license": "Publisher terms apply to original publication; factual metadata only here.",
+      "relation_to_comsol_runtime": "adjacent chemistry/transport evidence; not proof of this implementation",
+      "adoption_decision": "parameter prior or bounded reference only; inspect per-source restrictions"
+    }
+  ],
+  "parameters": [
+    {
+      "key": "L,W",
+      "value": [
+        0.01,
+        0.01
+      ],
+      "unit": "m",
+      "nature": "literature-area-plus-shape-hypothesis",
+      "source": "S24",
+      "boundary": "area1cm2; straight channel is a surrogate"
+    },
+    {
+      "key": "gap",
+      "value": 0.001,
+      "unit": "m",
+      "range": [
+        0.0005,
+        0.002
+      ],
+      "nature": "engineering-assumption",
+      "basis": "parameterized laboratory planar channel; published gap not verified"
+    },
+    {
+      "key": "Q",
+      "value": 6.666666666666667e-07,
+      "unit": "m3/s",
+      "nature": "literature-operating-reference",
+      "source": "S24",
+      "boundary": "internal circulation interpreted as local single-pass through modeled channel; no fresh-feed/recycle-loop claim"
+    },
+    {
+      "key": "anode_j_anchor",
+      "value": 1000,
+      "unit": "A/m2",
+      "nature": "literature-apparent-anchor",
+      "source": "S24",
+      "boundary": "uncorrected electrode polarization, not intrinsic kinetics"
+    },
+    {
+      "key": "anode_E_anchor",
+      "value": 0.79,
+      "unit": "VvsRHE",
+      "uncertainty_scenario_V": 0.1,
+      "nature": "literature-apparent-anchor",
+      "source": "S24"
+    },
+    {
+      "key": "ba",
+      "value": 0.2077,
+      "unit": "V/dec",
+      "nature": "literature-apparent-slope",
+      "source": "S24"
+    },
+    {
+      "key": "EG_order",
+      "value": 0.3,
+      "range": [
+        0.2,
+        1
+      ],
+      "nature": "adjacent-catalyst-prior",
+      "source": "S17"
+    },
+    {
+      "key": "EG_diffusivity",
+      "value": 5.55e-10,
+      "unit": "m2/s",
+      "nature": "engineering-estimate",
+      "basis": "Stokes-Einstein kBT/(6pi*mu*r);T298.15,mu1.4mPa*s,r~0.28nm from molecularvolume; no electrolyte measurement",
+      "multiplier_range": [
+        0.5,
+        2
+      ]
+    },
+    {
+      "key": "product_diffusivities",
+      "value": {
+        "GLY": 4.44e-10,
+        "FMA": 7.77e-10,
+        "OX": 4.44e-10
+      },
+      "unit": "m2/s",
+      "nature": "size-based-engineering-assumptions",
+      "boundary": "no ionic electrophoretic transport represented"
+    },
+    {
+      "key": "rho,mu",
+      "value": [
+        1040,
+        0.0014
+      ],
+      "unit": [
+        "kg/m3",
+        "Pa*s"
+      ],
+      "nature": "engineering-assumption-with-DWSIM-reference",
+      "basis": "neutralwaterEG~0.02molefractionDWSIMreference plus uncalibratedNaOH adjustment"
+    },
+    {
+      "key": "kappa",
+      "value": 17.6,
+      "unit": "S/m",
+      "range": [
+        10,
+        25
+      ],
+      "nature": "provisional-adjacent-reference-as-assumption",
+      "source": "S19",
+      "boundary": "not verified corrected mixedNaOH/EG conductivity"
+    },
+    {
+      "key": "FE",
+      "value": {
+        "GLY": 0.8,
+        "FMA": 0.15,
+        "OX": 0.05
+      },
+      "nature": "engineering-product-spectrum",
+      "basis": "glycolate approximate literaturewindow; explicitformate/oxalate alternatives, not measured spectrum"
+    },
+    {
+      "key": "HER_parameters",
+      "value": {
+        "jref_A_m2": 1000,
+        "eta_ref_V": 0.12,
+        "b_V_dec": 0.12
+      },
+      "nature": "engineering-kinetic-assumptions",
+      "boundary": "noNi-foam kinetic calibration; no validatedcellvoltageclaim"
+    }
+  ],
+  "model_constraints": [
+    "isothermal298.15K",
+    "stationarysinglephaselaminar",
+    "constant-supporting-electrolyteconductivity",
+    "neutralEGandpassiveionicproductscalars",
+    "noresolvedgasorfoaminterior",
+    "noinferredexperimentalcalibration"
+  ],
+  "grade_scope": "Evidence for this COMSOL implementation: A exact official/native evidence; B adjacent chemical/transport evidence; C discovery/background. Chemistry sources can directly support stated chemical facts without proving runtime."
+}

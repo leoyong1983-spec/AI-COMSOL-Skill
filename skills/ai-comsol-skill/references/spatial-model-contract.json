@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "model_family": "membrane-free-planar-fully-developed",
+  "date": "2026-10-26",
+  "kinetic_anchor_note": "apparent iR-uncorrected literature proxy; not project calibration",
+  "geometry_hypothesis": {
+    "active_length_m": 0.01,
+    "active_width_m": 0.01,
+    "gap_m": 0.001,
+    "upstream_straight_length_m": 0.02
+  },
+  "physics_contract": [
+    "native dimension2or3 geometry",
+    "native scalar Stokes-Poiseuille velocity PDE; no resolved entrances",
+    "native Transport of Diluted Species forEG,GLY,FMA,OX",
+    "native Secondary Current Distribution with empirical interfacial current expressions",
+    "4/6/8electron surface branch source terms",
+    "2D out-of-plane depth=W;3D finite-width sidewalls",
+    "steady isothermal single phase"
+  ],
+  "unsupported": [
+    "manifoldandentranceCFDacceptance",
+    "porouscatalystpore-scalegeometry",
+    "spatialNaOH/KOHactivityorionicmigration",
+    "explicitbubblehydrodynamics",
+    "temperature/deactivation/pulse-regenerationprediction",
+    "experimentallyvalidatedabsolutevoltage"
+  ],
+  "required_checks": {
+    "finite_fields": true,
+    "positive_EG": true,
+    "maximum_EG_over_feed_factor": 1.005,
+    "allowed_negative_product_abs_mol_m3": "1e-5 * feedEG",
+    "flow_relative_residual": 0.001,
+    "current_relative_residual": 0.001,
+    "species_flux_relative_residual": 0.02,
+    "save_reopen_scaled_difference": 1e-8
+  },
+  "mesh_comparison": {
+    "outputs": [
+      "totalcurrent",
+      "minimumanodeEG",
+      "maximumanodecurrentdensity",
+      "glycolategeneration",
+      "pressuredrop"
+    ],
+    "default_relative_limit": 0.02,
+    "claim_boundary": "report individual differences; no automatic validation of untested geometries"
+  }
+}

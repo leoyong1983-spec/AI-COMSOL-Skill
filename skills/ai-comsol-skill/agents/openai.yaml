@@ -1,0 +1,6 @@
+interface:
+  display_name: "乙二醇电解 COMSOL"
+  short_description: "原生 COMSOL 反应建模、二维三维情景、参数溯源与守恒校核"
+  default_prompt: "使用 $ai-comsol-skill，根据公开文献和明确标注的假设建立乙二醇电解模型，运行并核对守恒与保存重开结果。"
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "project_id": "public-eg-research",
+  "case_id": "pdnimoo4_spatial_literature_proxy",
+  "dimension": 2,
+  "flow_model": "fully-developed-poiseuille",
+  "data_status": "literature-scenario-with-assumptions",
+  "geometry": {
+    "length_m": 0.01,
+    "gap_m": 0.001,
+    "width_m": 0.01
+  },
+  "operation": {
+    "temperature_K": 298.15,
+    "flow_m3_s": 6.666666666666667e-07,
+    "anode_metal_potential_V_RHE": 0.79,
+    "cathode_metal_potential_V_RHE": -0.12,
+    "feed_EG_mol_m3": 1000
+  },
+  "properties": {
+    "density_kg_m3": 1040,
+    "viscosity_Pa_s": 0.0014,
+    "conductivity_S_m": 17.6,
+    "EG_diffusivity_m2_s": 5.55e-10,
+    "GLY_diffusivity_m2_s": 4.44e-10,
+    "FMA_diffusivity_m2_s": 7.77e-10,
+    "OX_diffusivity_m2_s": 4.44e-10
+  },
+  "kinetics": {
+    "anode_anchor_current_A_m2": 1000,
+    "anode_anchor_potential_V_RHE": 0.79,
+    "anode_tafel_V_dec": 0.2077,
+    "EG_reaction_order": 0.3,
+    "cathode_anchor_current_A_m2": 1000,
+    "cathode_anchor_overpotential_V": 0.12,
+    "cathode_tafel_V_dec": 0.12
+  },
+  "faradaic_efficiency": {
+    "GLY": 0.8,
+    "FMA": 0.15,
+    "OX": 0.05
+  },
+  "mesh": {
+    "axial_elements": 40,
+    "gap_elements": 24,
+    "span_elements": 10,
+    "gap_ratio": 20
+  },
+  "solver": {
+    "relative_tolerance": 1e-06
+  },
+  "assumptions": [
+    "Validated default uses a native fully-developed Stokes-Poiseuille scalar velocity PDE, followed by transport/current coupling. It does not resolve entrance/manifold flow. An upstream straight section at least20mm is assumed; estimated laminar entrance length is~8mm for the baseline. General Navier-Stokes coupling remains experimental and failed conservation checks in early attempts.",
+    "Rectangular membrane-free planar channel 10mm x 10mm footprint, 1mm gap; area consistent with published flow cell; gap and rectangular internal details are design hypotheses, not reconstructed hardware.",
+    "Pd/NiMoO4/NF apparent anode anchor 100mA/cm2 at0.79VvsRHE and207.7mV/dec from Shi2024. Source curves have no iR compensation; applying them as a local boundary law is an apparent proxy and may double-count unseparated reference ohmic loss. Not intrinsic parameter identification.",
+    "EG order0.3 is a Pd|CCE literature-derived prior0.2-0.4 (Habibi2017), not measured on Pd/NiMoO4. No fitted OH order or activity; support electrolyte treated as reservoir.",
+    "GLY FE0.8 is an engineering approximation near the published ~0.8V window; unmeasured balance assigned FMA0.15/OX0.05 as carbon-conserving alternatives. This product spectrum is not a measurement. No sub-thermodynamic OER current is assigned.",
+    "Cathode HER anchor100mA/cm2 at0.12V overpotential, b0.12V/dec are kinetic scenario assumptions; source Ni foam cathode is not calibrated. Cell voltage is scenario-dependent.",
+    "rho1040kg/m3 andmu1.4mPa*s are adjusted water/EG reference hypotheses allowing for1MNaOH; conductivity17.6S/m is an adjacent aqueousNaOH reference at20C, transferred provisionally to EG electrolyte at25C; not measured mixture properties.",
+    "EG diffusivity estimated from Stokes-Einstein using298.15K,mu1.4mPa*s and molecular-volume radius~0.28nm derived from EG molar mass62.06784g/mol and pure-liquid rho1110.13kg/m3. Other diffusivities scaled by molecular-size hypotheses, not ionic measurements.",
+    "Steady laminar incompressible Newtonian single phase; no resolved bubbles, porous electrode interior, thermal gradients, adsorption or deactivation.",
+    "Secondary current approximation: constant supporting-electrolyte conductivity; ionic products tracked as passive dilute product scalars without electromigration. No claim of spatial K+/Na+/OH- conservation or tertiary electrochemical resolution.",
+    "Surface EG/GLY/FMA/OX fluxes use4/6/8electron balanced branches; cathode gas/HER rate from current. Constant density/volume; solvent and base depletion not spatially resolved.",
+    "2D per-depth channel and 3D finite-width no-slip channel are related but not identical; do not treat 3D span as automatic2D extrusion equivalence."
+  ],
+  "provenance": {
+    "anode": "S24 DOI10.1038/s41467-024-47179-7 Fig4b and Results; no IR compensation",
+    "reactor_flow": "S24 Fig6 membrane-free1cm2,40mL/min1MNaOH+1MEG",
+    "reaction_order": "S17 DOI10.1007/s13738-017-1136-7 abstract PdCCE0.4-0.2",
+    "geometry_gap": "A01 hypothesis0.5-2mm; no project geometry",
+    "transport": "A02 Stokes-Einstein estimate and DWSIM reference; S19 adjacentNaOH conductivity",
+    "product_distribution": "A03 explicit counterproduct allocation; not measured",
+    "cathode": "A04 empirical kinetic hypothesis, pending actual cathode data"
+  },
+  "sensitivity_ranges": {
+    "gap_m": [
+      0.0005,
+      0.002
+    ],
+    "EG_diffusivity_multiplier": [
+      0.5,
+      2
+    ],
+    "conductivity_S_m": [
+      10,
+      25
+    ],
+    "EG_reaction_order": [
+      0.2,
+      1
+    ],
+    "anode_anchor_shift_V": [
+      -0.1,
+      0.1
+    ],
+    "GLY_FE": [
+      0.7,
+      0.95
+    ]
+  }
+}

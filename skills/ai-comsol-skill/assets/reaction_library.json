@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "status": "candidate-network-ethylene-glycol-priority",
+  "source": "Project EG priority2026-10-26; stoichiometry-balanced templates; literature pathway discussion; no validated kinetic coefficients",
+  "species": [
+    {
+      "id": "FF",
+      "label": "糠醛",
+      "atoms": {
+        "C": 5,
+        "H": 4,
+        "O": 2
+      },
+      "charge": 0,
+      "phase": "liquid"
+    },
+    {
+      "id": "FFA",
+      "label": "糠醇",
+      "atoms": {
+        "C": 5,
+        "H": 6,
+        "O": 2
+      },
+      "charge": 0,
+      "phase": "liquid"
+    },
+    {
+      "id": "EG",
+      "label": "乙二醇",
+      "atoms": {
+        "C": 2,
+        "H": 6,
+        "O": 2
+      },
+      "charge": 0,
+      "phase": "liquid"
+    },
+    {
+      "id": "GLY",
+      "label": "乙醇酸根",
+      "atoms": {
+        "C": 2,
+        "H": 3,
+        "O": 3
+      },
+      "charge": -1,
+      "phase": "liquid"
+    },
+    {
+      "id": "OH",
+      "label": "氢氧根",
+      "atoms": {
+        "H": 1,
+        "O": 1
+      },
+      "charge": -1,
+      "phase": "liquid"
+    },
+    {
+      "id": "K",
+      "label": "钾离子",
+      "atoms": {
+        "K": 1
+      },
+      "charge": 1,
+      "phase": "liquid"
+    },
+    {
+      "id": "H2O",
+      "label": "水",
+      "atoms": {
+        "H": 2,
+        "O": 1
+      },
+      "charge": 0,
+      "phase": "liquid"
+    },
+    {
+      "id": "H2",
+      "label": "氢气",
+      "atoms": {
+        "H": 2
+      },
+      "charge": 0,
+      "phase": "gas"
+    },
+    {
+      "id": "O2",
+      "label": "氧气",
+      "atoms": {
+        "O": 2
+      },
+      "charge": 0,
+      "phase": "gas"
+    },
+    {
+      "id": "electron",
+      "label": "电子",
+      "atoms": {},
+      "charge": -1,
+      "phase": "electronic"
+    },
+    {
+      "id": "FMA",
+      "label": "甲酸根",
+      "atoms": {
+        "C": 1,
+        "H": 1,
+        "O": 2
+      },
+      "charge": -1,
+      "phase": "liquid"
+    },
+    {
+      "id": "OX",
+      "label": "草酸根",
+      "atoms": {
+        "C": 2,
+        "O": 4
+      },
+      "charge": -2,
+      "phase": "liquid"
+    }
+  ],
+  "reactions": [
+    {
+      "id": "c_her",
+      "side": "cathode",
+      "label": "析氢副反应",
+      "electron_number": 2,
+      "stoichiometry": {
+        "H2O": -2,
+        "electron": -2,
+        "H2": 1,
+        "OH": 2
+      },
+      "substrate": null
+    },
+    {
+      "id": "a_eg",
+      "side": "anode",
+      "label": "乙二醇氧化为乙醇酸根",
+      "electron_number": 4,
+      "stoichiometry": {
+        "EG": -1,
+        "OH": -5,
+        "GLY": 1,
+        "H2O": 4,
+        "electron": 4
+      },
+      "substrate": "EG"
+    },
+    {
+      "id": "a_formate",
+      "side": "anode",
+      "label": "乙二醇C-C裂解为甲酸根",
+      "electron_number": 6,
+      "stoichiometry": {
+        "EG": -1,
+        "OH": -8,
+        "FMA": 2,
+        "H2O": 6,
+        "electron": 6
+      },
+      "substrate": "EG"
+    },
+    {
+      "id": "a_oxalate",
+      "side": "anode",
+      "label": "乙二醇深度氧化为草酸根",
+      "electron_number": 8,
+      "stoichiometry": {
+        "EG": -1,
+        "OH": -10,
+        "OX": 1,
+        "H2O": 8,
+        "electron": 8
+      },
+      "substrate": "EG"
+    },
+    {
+      "id": "a_oer",
+      "side": "anode",
+      "label": "析氧副反应",
+      "electron_number": 4,
+      "stoichiometry": {
+        "OH": -4,
+        "O2": 1,
+        "H2O": 2,
+        "electron": 4
+      },
+      "substrate": null
+    },
+    {
+      "id": "a_gly_to_ox",
+      "side": "anode",
+      "label": "乙醇酸根进一步氧化为草酸根（可选未校准支路）",
+      "electron_number": 4,
+      "stoichiometry": {
+        "GLY": -1,
+        "OH": -5,
+        "OX": 1,
+        "H2O": 4,
+        "electron": 4
+      },
+      "substrate": "GLY"
+    }
+  ],
+  "scope": "碱性乙二醇制乙醇酸盐及甲酸盐/草酸盐竞争支路；逐级反应与并行终点模型不可重复使用",
+  "basis": "反应元素及电荷已按代码核对；支路重要性及参数仍依催化剂与电解液资料确定"
+}

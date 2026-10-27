@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "project_id": "public-eg-research",
+  "case_id": "literature_eg_equivalent_charge_1h",
+  "data_status": "literature-scenario",
+  "purpose": "文献锚定的等效电荷/物料情景；不是脉冲波形、动力学、催化衰减或装置复现",
+  "reaction_pair_status": "Illustrative research configuration; not a frozen engineering design",
+  "parameter_source": "Han2025 DOI10.1038/s41467-025-58813-3 plus explicitly enumerated engineering assumptions",
+  "kinetic_mode": "prescribed-fe",
+  "current_A": 0.055350884972222215,
+  "temperature_K": 298.15,
+  "anode_reference_potential_V": null,
+  "cathode_reference_potential_V": null,
+  "ohmic_resistance_ohm": null,
+  "electrode_area_m2": {
+    "anode": 0.0001,
+    "cathode": 0.0001
+  },
+  "compartments": {
+    "cell": {
+      "volume_m3": 0.0005,
+      "flow_m3_s": 0,
+      "feed_mol_m3": {
+        "FF": 0,
+        "FFA": 0,
+        "EG": 100,
+        "GLY": 0,
+        "OH": 1000,
+        "K": 1000,
+        "H2O": 55500,
+        "FMA": 0,
+        "OX": 0
+      },
+      "initial_mol_m3": {
+        "FF": 0,
+        "FFA": 0,
+        "EG": 100,
+        "GLY": 0,
+        "OH": 1000,
+        "K": 1000,
+        "H2O": 55500,
+        "FMA": 0,
+        "OX": 0
+      }
+    }
+  },
+  "membrane": {
+    "model": "none-shared-electrolyte",
+    "neutral_permeability_m_s": {},
+    "source": "Han2025 membrane-free setup"
+  },
+  "time": {
+    "stop_s": 3600,
+    "output_step_s": 120,
+    "reference_max_step_s": 2
+  },
+  "solver": {
+    "relative_tolerance": 1e-07
+  },
+  "species": [
+    {
+      "id": "FF",
+      "label": "糠醛",
+      "atoms": {
+        "C": 5,
+        "H": 4,
+        "O": 2
+      },
+      "charge": 0,
+      "phase": "liquid"
+    },
+    {
+      "id": "FFA",
+      "label": "糠醇",
+      "atoms": {
+        "C": 5,
+        "H": 6,
+        "O": 2
+      },
+      "charge": 0,
+      "phase": "liquid"
+    },
+    {
+      "id": "EG",
+      "label": "乙二醇",
+      "atoms": {
+        "C": 2,
+        "H": 6,
+        "O": 2
+      },
+      "charge": 0,
+      "phase": "liquid"
+    },
+    {
+      "id": "GLY",
+      "label": "乙醇酸根",
+      "atoms": {
+        "C": 2,
+        "H": 3,
+        "O": 3
+      },
+      "charge": -1,
+      "phase": "liquid"
+    },
+    {
+      "id": "OH",
+      "label": "氢氧根",
+      "atoms": {
+        "H": 1,
+        "O": 1
+      },
+      "charge": -1,
+      "phase": "liquid"
+    },
+    {
+      "id": "K",
+      "label": "钾离子",
+      "atoms": {
+        "K": 1
+      },
+      "charge": 1,
+      "phase": "liquid"
+    },
+    {
+      "id": "H2O",
+      "label": "水",
+      "atoms": {
+        "H": 2,
+        "O": 1
+      },
+      "charge": 0,
+      "phase": "liquid"
+    },
+    {
+      "id": "H2",
+      "label": "氢气",
+      "atoms": {
+        "H": 2
+      },
+      "charge": 0,
+      "phase": "gas"
+    },
+    {
+      "id": "O2",
+      "label": "氧气",
+      "atoms": {
+        "O": 2
+      },
+      "charge": 0,
+      "phase": "gas"
+    },
+    {
+      "id": "electron",
+      "label": "电子",
+      "atoms": {},
+      "charge": -1,
+      "phase": "electronic"
+    },
+    {
+      "id": "FMA",
+      "label": "甲酸根",
+      "atoms": {
+        "C": 1,
+        "H": 1,
+        "O": 2
+      },
+      "charge": -1,
+      "phase": "liquid"
+    },
+    {
+      "id": "OX",
+      "label": "草酸根",
+      "atoms": {
+        "C": 2,
+        "O": 4
+      },
+      "charge": -2,
+      "phase": "liquid"
+    }
+  ],
+  "reactions": [
+    {
+      "id": "c_her",
+      "side": "cathode",
+      "label": "析氢副反应",
+      "electron_number": 2,
+      "stoichiometry": {
+        "H2O": -2,
+        "electron": -2,
+        "H2": 1,
+        "OH": 2
+      },
+      "substrate": null,
+      "faradaic_efficiency": 1
+    },
+    {
+      "id": "a_eg",
+      "side": "anode",
+      "label": "乙二醇氧化为乙醇酸根",
+      "electron_number": 4,
+      "stoichiometry": {
+        "EG": -1,
+        "OH": -5,
+        "GLY": 1,
+        "H2O": 4,
+        "electron": 4
+      },
+      "substrate": "EG",
+      "faradaic_efficiency": 0.92
+    },
+    {
+      "id": "a_oer",
+      "side": "anode",
+      "label": "析氧副反应",
+      "electron_number": 4,
+      "stoichiometry": {
+        "OH": -4,
+        "O2": 1,
+        "H2O": 2,
+        "electron": 4
+      },
+      "substrate": null,
+      "faradaic_efficiency": 0.08
+    }
+  ],
+  "assumptions": [
+    "本情景只使用文献量级建立电荷—产物—库存核对，不声称复现脉冲机理或性能。",
+    "阳极剩余8%电流暂设析氧、阴极100%析氢，是显式工程假设；可在替换为实测支路前做敏感性比较。",
+    "不把0.475mmol/cm2/h、FE92%和500mL工况拼接成已验证的单条实验时间序列。",
+    "8mL/min是内部循环量；封闭液体库存不采用8mL/min新鲜进料。",
+    "忽略溶解气体及挥发损失；不能据此评价H2/O2混合风险或密封。",
+    "1.1VvsRHE不是槽压；缺少阴极极化和欧姆损失时PDC、热负荷为空。",
+    "文献流动实验含PET水解液其他组分；本情景只保留EG/KOH参考液，未表示完整水解液组成或其影响。"
+  ],
+  "provenance": {
+    "reaction_pair": "Han2025 reaction scheme; illustrative EG oxidation/HER baseline",
+    "reactor_geometry": "Han2025 Methods p8: area1cm2, liquid500mL; stirred shared electrolyte",
+    "electrolyte_speciation": "Han2025 0.10M EG +1M KOH; explicit K+,OH-,glycolate; H2O55500mol/m3 is dilute-solvent approximation",
+    "kinetics_and_side_reactions": "Prescribed FE92% anchored to reported nominal GA FE; residual8% assigned OER ONLY as an engineering scenario, not measured identity; HER100% assumed",
+    "membrane": "Han2025 membrane-free; no membrane transfer",
+    "operating_conditions": "25degC; current derived from reported0.475mmol/cm2/h and nominalFE0.92, not measured current trace; recirculation8mL/min is internal and net feed=0",
+    "electrode_potential_reference": "Reported1.1VvsRHE is anode potential, not full-cell voltage; no DC power calculated"
+  },
+  "chemistry_direction": "ethylene-glycol-electrolysis",
+  "cell_topology": "shared-electrolyte"
+}

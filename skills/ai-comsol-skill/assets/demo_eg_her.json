@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "project_id": "public-eg-research",
+  "case_id": "demo_eg_her_kinetic_cstr",
+  "data_status": "demonstration",
+  "purpose": "原生COMSOL与独立积分核对；数值均为自拟软件测试条件，不是项目工况或文献动力学",
+  "reaction_pair_status": "Illustrative research configuration; not a frozen engineering design",
+  "parameter_source": "synthetic-test-values",
+  "kinetic_mode": "tafel",
+  "current_A": 1,
+  "temperature_K": 298.15,
+  "anode_reference_potential_V": 0.8,
+  "cathode_reference_potential_V": 0,
+  "ohmic_resistance_ohm": 0.1,
+  "electrode_area_m2": {
+    "cathode": 0.01,
+    "anode": 0.01
+  },
+  "compartments": {
+    "cathode": {
+      "volume_m3": 0.0001,
+      "flow_m3_s": 1e-06,
+      "feed_mol_m3": {
+        "FF": 0,
+        "FFA": 0,
+        "EG": 0,
+        "GLY": 0,
+        "OH": 1000,
+        "K": 1000,
+        "H2O": 55500,
+        "FMA": 0,
+        "OX": 0
+      },
+      "initial_mol_m3": {
+        "FF": 0,
+        "FFA": 0,
+        "EG": 0,
+        "GLY": 0,
+        "OH": 1000,
+        "K": 1000,
+        "H2O": 55500,
+        "FMA": 0,
+        "OX": 0
+      }
+    },
+    "anode": {
+      "volume_m3": 0.0001,
+      "flow_m3_s": 1e-06,
+      "feed_mol_m3": {
+        "FF": 0,
+        "FFA": 0,
+        "EG": 100,
+        "GLY": 0,
+        "OH": 1000,
+        "K": 1000,
+        "H2O": 55500,
+        "FMA": 0,
+        "OX": 0
+      },
+      "initial_mol_m3": {
+        "FF": 0,
+        "FFA": 0,
+        "EG": 100,
+        "GLY": 0,
+        "OH": 1000,
+        "K": 1000,
+        "H2O": 55500,
+        "FMA": 0,
+        "OX": 0
+      }
+    }
+  },
+  "membrane": {
+    "carrier_species": "OH",
+    "carrier_direction": "cathode-to-anode",
+    "carrier_mol_per_mol_e": 1,
+    "area_m2": 0.01,
+    "neutral_permeability_m_s": {
+      "EG": 2e-07
+    },
+    "model": "prescribed-charge-carrier-plus-neutral-permeation",
+    "source": "synthetic-test-values"
+  },
+  "time": {
+    "stop_s": 600,
+    "output_step_s": 20,
+    "reference_max_step_s": 0.25
+  },
+  "solver": {
+    "relative_tolerance": 1e-07
+  },
+  "species": [
+    {
+      "id": "FF",
+      "label": "糠醛",
+      "atoms": {
+        "C": 5,
+        "H": 4,
+        "O": 2
+      },
+      "charge": 0,
+      "phase": "liquid"
+    },
+    {
+      "id": "FFA",
+      "label": "糠醇",
+      "atoms": {
+        "C": 5,
+        "H": 6,
+        "O": 2
+      },
+      "charge": 0,
+      "phase": "liquid"
+    },
+    {
+      "id": "EG",
+      "label": "乙二醇",
+      "atoms": {
+        "C": 2,
+        "H": 6,
+        "O": 2
+      },
+      "charge": 0,
+      "phase": "liquid"
+    },
+    {
+      "id": "GLY",
+      "label": "乙醇酸根",
+      "atoms": {
+        "C": 2,
+        "H": 3,
+        "O": 3
+      },
+      "charge": -1,
+      "phase": "liquid"
+    },
+    {
+      "id": "OH",
+      "label": "氢氧根",
+      "atoms": {
+        "H": 1,
+        "O": 1
+      },
+      "charge": -1,
+      "phase": "liquid"
+    },
+    {
+      "id": "K",
+      "label": "钾离子",
+      "atoms": {
+        "K": 1
+      },
+      "charge": 1,
+      "phase": "liquid"
+    },
+    {
+      "id": "H2O",
+      "label": "水",
+      "atoms": {
+        "H": 2,
+        "O": 1
+      },
+      "charge": 0,
+      "phase": "liquid"
+    },
+    {
+      "id": "H2",
+      "label": "氢气",
+      "atoms": {
+        "H": 2
+      },
+      "charge": 0,
+      "phase": "gas"
+    },
+    {
+      "id": "O2",
+      "label": "氧气",
+      "atoms": {
+        "O": 2
+      },
+      "charge": 0,
+      "phase": "gas"
+    },
+    {
+      "id": "electron",
+      "label": "电子",
+      "atoms": {},
+      "charge": -1,
+      "phase": "electronic"
+    },
+    {
+      "id": "FMA",
+      "label": "甲酸根",
+      "atoms": {
+        "C": 1,
+        "H": 1,
+        "O": 2
+      },
+      "charge": -1,
+      "phase": "liquid"
+    },
+    {
+      "id": "OX",
+      "label": "草酸根",
+      "atoms": {
+        "C": 2,
+        "O": 4
+      },
+      "charge": -2,
+      "phase": "liquid"
+    }
+  ],
+  "reactions": [
+    {
+      "id": "c_her",
+      "side": "cathode",
+      "label": "析氢副反应",
+      "electron_number": 2,
+      "stoichiometry": {
+        "H2O": -2,
+        "electron": -2,
+        "H2": 1,
+        "OH": 2
+      },
+      "substrate": null,
+      "kinetics": {
+        "j_ref_A_m2": 3,
+        "alpha_eff": 0.5,
+        "eta_offset_V": 0,
+        "substrate_ref_mol_m3": 100,
+        "order": 0,
+        "source": "synthetic-test-values"
+      },
+      "faradaic_efficiency": 1
+    },
+    {
+      "id": "a_eg",
+      "side": "anode",
+      "label": "乙二醇氧化为乙醇酸根",
+      "electron_number": 4,
+      "stoichiometry": {
+        "EG": -1,
+        "OH": -5,
+        "GLY": 1,
+        "H2O": 4,
+        "electron": 4
+      },
+      "substrate": "EG",
+      "kinetics": {
+        "j_ref_A_m2": 20,
+        "alpha_eff": 0.5,
+        "eta_offset_V": 0,
+        "substrate_ref_mol_m3": 100,
+        "order": 1,
+        "source": "synthetic-test-values"
+      },
+      "faradaic_efficiency": 0.9
+    },
+    {
+      "id": "a_formate",
+      "side": "anode",
+      "label": "乙二醇C-C裂解为甲酸根",
+      "electron_number": 6,
+      "stoichiometry": {
+        "EG": -1,
+        "OH": -8,
+        "FMA": 2,
+        "H2O": 6,
+        "electron": 6
+      },
+      "substrate": "EG",
+      "kinetics": {
+        "j_ref_A_m2": 2,
+        "alpha_eff": 0.5,
+        "eta_offset_V": 0,
+        "substrate_ref_mol_m3": 100,
+        "order": 1,
+        "source": "synthetic-test-values"
+      },
+      "faradaic_efficiency": 0.04
+    },
+    {
+      "id": "a_oxalate",
+      "side": "anode",
+      "label": "乙二醇深度氧化为草酸根",
+      "electron_number": 8,
+      "stoichiometry": {
+        "EG": -1,
+        "OH": -10,
+        "OX": 1,
+        "H2O": 8,
+        "electron": 8
+      },
+      "substrate": "EG",
+      "kinetics": {
+        "j_ref_A_m2": 1,
+        "alpha_eff": 0.5,
+        "eta_offset_V": 0,
+        "substrate_ref_mol_m3": 100,
+        "order": 1,
+        "source": "synthetic-test-values"
+      },
+      "faradaic_efficiency": 0.01
+    },
+    {
+      "id": "a_oer",
+      "side": "anode",
+      "label": "析氧副反应",
+      "electron_number": 4,
+      "stoichiometry": {
+        "OH": -4,
+        "O2": 1,
+        "H2O": 2,
+        "electron": 4
+      },
+      "substrate": null,
+      "kinetics": {
+        "j_ref_A_m2": 2,
+        "alpha_eff": 0.5,
+        "eta_offset_V": 0,
+        "substrate_ref_mol_m3": 100,
+        "order": 0,
+        "source": "synthetic-test-values"
+      },
+      "faradaic_efficiency": 0.05
+    }
+  ],
+  "assumptions": [
+    "两侧为恒容、完全混合、等温CSTR；气体生成后即时离开液相，不解溶解或气泡。",
+    "仅前向Tafel支路，电流大于零；未求逆反应、电双层、空间电势、流场或热点。",
+    "OH-作为给定电流载流离子；未解Donnan、电渗、扩散电势或浓溶液热力学。",
+    "目标物中性跨膜后仅计污染，不自动引入另一侧化学反应。",
+    "电功与反应热分开：缺少统一焓基准时热负荷保持null。"
+  ],
+  "provenance": {
+    "parameters": "all numerical parameters intentionally synthetic",
+    "reaction_stoichiometry": "balanced alkaline half-reaction templates",
+    "project_selection": "not approved"
+  },
+  "chemistry_direction": "ethylene-glycol-electrolysis",
+  "cell_topology": "two-compartment"
+}

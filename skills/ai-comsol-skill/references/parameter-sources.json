@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "updated": "2026-10-26",
+  "source_policy": "public-literature-native-engineering-software-and-explicit-scenarios",
+  "sources": [
+    {
+      "id": "L01",
+      "kind": "peer-reviewed-literature",
+      "title": "Pulsed electrosynthesis of glycolic acid through polyethylene terephthalate upcycling over a mesoporous PdCu catalyst",
+      "doi": "10.1038/s41467-025-58813-3",
+      "url": "https://www.nature.com/articles/s41467-025-58813-3",
+      "verified": "Prior bounded source review; no private full text bundled. Recheck publisher when calibrating.",
+      "contexts": [
+        "LSV composition",
+        "PE performance",
+        "flow setup"
+      ],
+      "boundary": "not project experimental validation; PETH contains other species not modeled in EG-only scenario",
+      "access": "Metadata or bounded excerpts; see evidence boundary. No full text redistributed.",
+      "license": "Publisher terms apply to original publication; factual metadata only here.",
+      "grade": "B",
+      "relation_to_comsol_runtime": "adjacent chemistry/transport evidence; not proof of this implementation",
+      "adoption_decision": "parameter prior or bounded reference only; inspect per-source restrictions"
+    },
+    {
+      "id": "L02",
+      "kind": "peer-reviewed-literature",
+      "title": "Elemental Trade-Off in the Selective Electro-Oxidation of Ethylene Glycol on Palladium-Silver/Nickel Electrodes",
+      "doi": "10.1002/cssc.202500724",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12302309/",
+      "verified": "Prior bounded source review; no private full text bundled. Recheck publisher when calibrating.",
+      "boundary": "supports product-pathway/catalyst-dependence discussion; no unverified numerical kinetic fit",
+      "access": "Metadata or bounded excerpts; see evidence boundary. No full text redistributed.",
+      "license": "Publisher terms apply to original publication; factual metadata only here.",
+      "grade": "B",
+      "relation_to_comsol_runtime": "adjacent chemistry/transport evidence; not proof of this implementation",
+      "adoption_decision": "parameter prior or bounded reference only; inspect per-source restrictions"
+    },
+    {
+      "id": "S01",
+      "kind": "native-engineering-software",
+      "engine": "DWSIM9.0.5",
+      "method": "CalculatorInterface.Calculator.CalcProp",
+      "property_package": "Raoult's Law",
+      "boundary": "neutral Water/EG reference only; no KOH/glycolate activities, conductivity or kinetics; Cp zero excluded",
+      "access": "Metadata or bounded excerpts; see evidence boundary. No full text redistributed.",
+      "license": "Publisher terms apply to original publication; factual metadata only here.",
+      "grade": "B",
+      "relation_to_comsol_runtime": "adjacent chemistry/transport evidence; not proof of this implementation",
+      "adoption_decision": "parameter prior or bounded reference only; inspect per-source restrictions"
+    },
+    {
+      "id": "S02",
+      "kind": "native-solver",
+      "engine": "COMSOL6.4.0.429",
+      "method": "Global ODE/DAE via native Java and batch",
+      "boundary": "verified solution of declared 0D equations; not geometric/experimental validation",
+      "access": "Metadata or bounded excerpts; see evidence boundary. No full text redistributed.",
+      "license": "Publisher terms apply to original publication; factual metadata only here.",
+      "grade": "A",
+      "relation_to_comsol_runtime": "direct local execution; reproduce with licensed installation",
+      "adoption_decision": "parameter prior or bounded reference only; inspect per-source restrictions"
+    }
+  ],
+  "parameters": [
+    {
+      "id": "EG_feed",
+      "value": 100,
+      "unit": "mol/m3",
+      "original_value": 0.1,
+      "original_unit": "mol/L",
+      "source_id": "L01",
+      "locator": "Methods PDF-page8",
+      "nature": "literature",
+      "condition": "Han25-flow-setup"
+    },
+    {
+      "id": "KOH_nominal",
+      "value": 1000,
+      "unit": "mol/m3",
+      "original_value": 1,
+      "original_unit": "mol/L",
+      "source_id": "L01",
+      "locator": "Methods PDF-page8",
+      "nature": "literature",
+      "condition": "Han25-flow-setup",
+      "mapping": "K+ and OH- explicit; activities not modeled"
+    },
+    {
+      "id": "T",
+      "value": 298.15,
+      "unit": "K",
+      "original_value": 25,
+      "original_unit": "degC",
+      "source_id": "L01",
+      "locator": "Electrocatalytic measurement PDF-page8",
+      "nature": "literature"
+    },
+    {
+      "id": "area_geometric",
+      "value": 0.0001,
+      "unit": "m2",
+      "original_value": 1,
+      "original_unit": "cm2",
+      "source_id": "L01",
+      "locator": "flow setup PDF-page8",
+      "nature": "literature",
+      "condition": "Han25-flow-setup"
+    },
+    {
+      "id": "liquid_inventory",
+      "value": 0.0005,
+      "unit": "m3",
+      "original_value": 500,
+      "original_unit": "mL",
+      "source_id": "L01",
+      "locator": "flow setup PDF-page8",
+      "nature": "literature",
+      "condition": "Han25-flow-setup"
+    },
+    {
+      "id": "internal_circulation",
+      "value": 1.3333333333333334e-07,
+      "unit": "m3/s",
+      "original_value": 8,
+      "original_unit": "mL/min",
+      "source_id": "L01",
+      "locator": "flow setup PDF-page8",
+      "nature": "literature",
+      "not_net_feed": true
+    },
+    {
+      "id": "GA_yield_rate_reported",
+      "value": 0.475,
+      "unit": "mmol/(cm2*h)",
+      "source_id": "L01",
+      "locator": "PE results and Fig4d",
+      "nature": "literature-performance",
+      "boundary": "reported PE result; not a time-resolved calibration dataset"
+    },
+    {
+      "id": "GA_FE_nominal",
+      "value": 0.92,
+      "unit": "1",
+      "source_id": "L01",
+      "nature": "reported-nominal-value-used-as-scenario-anchor",
+      "boundary": "article also describes >92% over a window; do not turn the bound into an exact repeated measurement"
+    },
+    {
+      "id": "equivalent_average_current",
+      "value": 0.055350884972222215,
+      "unit": "A",
+      "nature": "derived-scenario",
+      "formula": "4 F*(0.475e-3 mol/h)/3600 /0.92 at1cm2",
+      "source_id": "L01",
+      "boundary": "not measured current trace and not full pulse simulation"
+    },
+    {
+      "id": "residual_anode_current_to_OER",
+      "value": 0.08,
+      "unit": "1",
+      "nature": "engineering-assumption",
+      "boundary": "not measured product identification; alternative allocation requires a new scenario"
+    },
+    {
+      "id": "HER_FE",
+      "value": 1,
+      "unit": "1",
+      "nature": "engineering-assumption",
+      "boundary": "not a project/catalyst validation"
+    },
+    {
+      "id": "water_concentration",
+      "value": 55500,
+      "unit": "mol/m3",
+      "nature": "dilute-solvent-approximation",
+      "boundary": "not obtained by fitting actual KOH/PETH density"
+    },
+    {
+      "id": "tafel_demo_coefficients",
+      "nature": "synthetic-test-values",
+      "location": "assets/demo_eg_her.json",
+      "boundary": "software validation only; not literature kinetic constants"
+    }
+  ],
+  "unknown_for_project": [
+    "actual catalyst and active area",
+    "electrode/membrane geometry and flow distribution",
+    "paired cathode selection and product specification",
+    "calibrated polarization and branch kinetics",
+    "actual electrolyte thermodynamics/transport",
+    "validated deactivation and pulse regeneration",
+    "full-cell voltage/enthalpy/heat transfer"
+  ],
+  "grade_scope": "Evidence for this COMSOL implementation: A exact official/native evidence; B adjacent chemical/transport evidence; C discovery/background. Chemistry sources can directly support stated chemical facts without proving runtime."
+}
