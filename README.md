@@ -21,7 +21,7 @@ Native COMSOL automation for ethylene-glycol electrolysis research: 0D balances,
 
 ## 快速运行
 
-环境：Windows、Python **3.12**、用户自有COMSOL安装和对应物理接口许可。当前验证版本及数值证据见[验证说明](docs/verification.md)。无需安装MPh、MATLAB或MCP；基础测试不需要COMSOL。
+环境：Windows、Python **3.12**、用户自有COMSOL安装和对应物理接口许可。模型修正及当前验证见[模型检查记录](docs/model-audit.md)，初版证据见[历史验证说明](docs/verification.md)。无需安装MPh、MATLAB或MCP；基础测试不需要COMSOL。
 
 ```powershell
 git clone https://github.com/leoyong1983-spec/AI-COMSOL-Skill.git

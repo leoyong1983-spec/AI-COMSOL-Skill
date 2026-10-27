@@ -1,0 +1,714 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-27",
+  "environment": {
+    "os": "Windows x64",
+    "python": "3.12.10",
+    "comsol": "6.4.0.429"
+  },
+  "scope": "Numerical verification of corrected declared equations; no experimental calibration or engineering acceptance. Native files retained locally.",
+  "behavioral_tests": {
+    "count": 42,
+    "command": "py -3.12 -B tools/validate_repo.py",
+    "requires_comsol": false
+  },
+  "zero_d_runs": [
+    {
+      "run": "audit-0d-fe",
+      "checks": {
+        "species_balance_max_abs_mol": 7.105427357601002e-15,
+        "element_balance_max_abs_mol_atoms": 1.3917686447761923e-14,
+        "bulk_charge_max_abs_mol_charge_m3": 1.4248324742283103e-13,
+        "electrode_current_max_abs_residual_A": 6.938893903907228e-18,
+        "cumulative_electrode_charge_max_relative_residual": 4.2790206282259405e-16,
+        "minimum_liquid_concentration_mol_m3": 0.0
+      },
+      "independent_reference_agreement": {
+        "state_max_scaled_difference": 8.442757932322399e-14,
+        "native_current_max_scaled_difference": 0.0,
+        "relative_tolerance": 5e-05,
+        "state_absolute_tolerance_SI": 1e-09,
+        "current_density_absolute_tolerance_A_m2": 1e-08,
+        "state_max_tolerance_ratio": 1.6885515858558483e-09,
+        "current_max_tolerance_ratio": 0.0
+      },
+      "performance": {
+        "net_reaction_generation_mol": {
+          "FF": 0.0,
+          "FFA": 0.0,
+          "EG": -0.00047499999999999994,
+          "GLY": 0.00047499999999999994,
+          "OH": -0.00047500000000000005,
+          "K": 0.0,
+          "H2O": -8.26086956521736e-05,
+          "H2": 0.0010326086956521736,
+          "O2": 4.1304347826086946e-05,
+          "FMA": 0.0,
+          "OX": 0.0
+        },
+        "eg_net_consumed_mol": 0.00047499999999999994,
+        "eg_initial_plus_cumulative_feed_mol": 0.05,
+        "eg_cumulative_conversion_initial_plus_feed_basis": 0.009499999999999998,
+        "carbon_selectivity_net_generation_per_eg_consumed": {
+          "GLY": 1.0,
+          "FMA": 0.0,
+          "OX": 0.0
+        },
+        "carbon_selectivity_status": "EG-only carbon feed, net product generation basis",
+        "cumulative_branch_faradaic_efficiency": {
+          "c_her": 1.0,
+          "a_eg": 0.9200000000000002,
+          "a_oer": 0.08
+        },
+        "warning": "scenario calculation; no experimental calibration or separated-product purity claim"
+      },
+      "native_mph_sha256": "890625428bbf3c7a5f2de430fbfd1e9162c0791286d508303f74820c257a1307",
+      "config_sha256": "151c184fff75483ae3f52ee49fc84a6ff93fa5912b435d1c56928a52457196fd",
+      "readback": {
+        "save_reopen_max_scaled_difference": 0.0,
+        "save_reopen_max_tolerance_ratio": 0.0,
+        "save_reopen_relative_tolerance": 1e-08,
+        "save_reopen_absolute_tolerance_SI": 1e-14
+      }
+    },
+    {
+      "run": "audit-0d-kinetic",
+      "checks": {
+        "species_balance_max_abs_mol": 9.947598300641403e-14,
+        "element_balance_max_abs_mol_atoms": 2.7239495381525813e-13,
+        "bulk_charge_max_abs_mol_charge_m3": 2.4005242238445135e-12,
+        "electrode_current_max_abs_residual_A": 3.597122599785507e-14,
+        "cumulative_electrode_charge_max_relative_residual": 3.197442310920451e-15,
+        "minimum_liquid_concentration_mol_m3": 0.0
+      },
+      "independent_reference_agreement": {
+        "state_max_scaled_difference": 2.2385740125006378e-07,
+        "native_current_max_scaled_difference": 1.2065727451731442e-11,
+        "relative_tolerance": 5e-05,
+        "state_absolute_tolerance_SI": 1e-09,
+        "current_density_absolute_tolerance_A_m2": 1e-08,
+        "state_max_tolerance_ratio": 0.014833417990307764,
+        "current_max_tolerance_ratio": 2.413140166623175e-07
+      },
+      "performance": {
+        "net_reaction_generation_mol": {
+          "FF": -0.002816159569711358,
+          "FFA": 0.002816159569711358,
+          "EG": -0.00141074117975002,
+          "GLY": 0.00141074117975002,
+          "OH": -0.0014107411797500136,
+          "K": 0.0,
+          "H2O": -0.00028779853748528417,
+          "H2": 0.000293121327273963,
+          "O2": 0.00014389926874263867
+        },
+        "eg_net_consumed_mol": 0.00141074117975002,
+        "eg_initial_plus_cumulative_feed_mol": 0.06999999999999999,
+        "eg_cumulative_conversion_initial_plus_feed_basis": 0.020153445425000287,
+        "carbon_selectivity_net_generation_per_eg_consumed": null,
+        "carbon_selectivity_status": "not-applicable-zero-conversion-or-other-carbon-feed",
+        "cumulative_branch_faradaic_efficiency": {
+          "c_ff": 0.905726971288389,
+          "c_her": 0.09427302871161179,
+          "a_eg": 0.9074388750902754,
+          "a_oer": 0.0925611249097242
+        },
+        "warning": "scenario calculation; no experimental calibration or separated-product purity claim"
+      },
+      "native_mph_sha256": "5193fe734df349c433d62a26bff622e5e339879fa06a6dca5dc42a9a3ef92934",
+      "config_sha256": "1a1ea0b165ec701495938dbdac986957a5febcb1c3a015b204e2725c09c4d2a0",
+      "readback": {
+        "save_reopen_max_scaled_difference": 0.0,
+        "save_reopen_max_tolerance_ratio": 0.0,
+        "save_reopen_relative_tolerance": 1e-08,
+        "save_reopen_absolute_tolerance_SI": 1e-14
+      }
+    }
+  ],
+  "spatial_runs": [
+    {
+      "run": "audit-2d-base",
+      "status": "native-spatial-solve-and-readback-passed",
+      "interface_version": "spatial-2",
+      "dimension": 2,
+      "mesh": {
+        "axial_elements": 40,
+        "gap_elements": 24,
+        "span_elements": 10,
+        "gap_ratio": 20
+      },
+      "metrics": {
+        "Qin_m3_s": 6.666666666666666e-07,
+        "Qout_m3_s": 6.6666666666667e-07,
+        "I_anode_A": 0.07332586133701142,
+        "I_cathode_A": -0.07332586133701141,
+        "EG_surface_min_mol_m3": 882.8441402737603,
+        "EG_surface_max_mol_m3": 1000.0,
+        "j_anode_min_A_m2": 729.3591918509358,
+        "j_anode_max_A_m2": 747.9981210386825,
+        "pressure_drop_Pa": 11.200000000000369,
+        "EG_consumption_mol_s": 1.7574283118075136e-07,
+        "GLY_generation_mol_s": 1.5199379994010928e-07,
+        "FMA_generation_mol_s": 3.799844998502733e-08,
+        "OX_generation_mol_s": 4.749806248128415e-09,
+        "EG_net_boundary_out_mol_s": -1.7518294279719738e-07,
+        "GLY_net_boundary_out_mol_s": 1.514997604429431e-07,
+        "FMA_net_boundary_out_mol_s": 3.787312447920231e-08,
+        "OX_net_boundary_out_mol_s": 4.734367514147192e-09
+      },
+      "checks": {
+        "flow_relative_residual": 5.082197683525802e-15,
+        "flow_command_relative_residual": 4.923379005915621e-15,
+        "current_relative_residual": 1.8926184506760926e-16,
+        "EG_faradaic_relative_residual": 3.0123310776156473e-16,
+        "EG_mass_relative_residual": 0.0031858391024674818,
+        "GLY_faradaic_relative_residual": 1.7415039042465463e-16,
+        "GLY_mass_relative_residual": 0.0032503924328548626,
+        "FMA_faradaic_relative_residual": 1.741503904246546e-16,
+        "FMA_mass_relative_residual": 0.003298174159061767,
+        "OX_faradaic_relative_residual": 1.7415039042465463e-16,
+        "OX_mass_relative_residual": 0.003250392368595284,
+        "carbon_relative_residual": 6.97189206729896e-05,
+        "save_reopen_max_scaled_difference": 0.0,
+        "save_reopen_max_tolerance_ratio": 0.0,
+        "save_reopen_relative_tolerance": 1e-08,
+        "save_reopen_absolute_tolerance_SI": 1e-14,
+        "field_save_reopen_max_scaled_difference": 0.0,
+        "field_save_reopen_max_tolerance_ratio": 0.0,
+        "field_save_reopen_relative_tolerance": 1e-08,
+        "field_save_reopen_absolute_tolerance_SI": 1e-14
+      },
+      "field_checks": {
+        "exported_points": 1025,
+        "species_min_mol_m3": {
+          "EG": 882.8441402737603,
+          "GLY": -0.00020781402292501243,
+          "FMA": -6.950905009823467e-06,
+          "OX": -6.4941882526444106e-06
+        },
+        "species_max_mol_m3": {
+          "EG": 1000.0000000137461,
+          "GLY": 117.52392279803036,
+          "FMA": 20.255841136542617,
+          "OX": 3.6726225874416705
+        },
+        "anode_kinetic_field_relative_residual": 2.479337192201945e-16,
+        "maximum_product_charge_equivalent_fraction_of_support": 0.1451250091094563,
+        "support_electrolyte_approximation_warning": true,
+        "support_fraction_screen_note": "0.1 is an engineering review indicator, not a validated accuracy threshold; no spatial ionic balance is solved"
+      },
+      "applicability": {
+        "mean_velocity_m_s": 0.06666666666666667,
+        "hydraulic_diameter_m": 0.0018181818181818184,
+        "Reynolds_number": 90.04329004329004,
+        "laminar_screen_limit": 2000,
+        "entrance_length_estimate_m": 0.008185753640299097,
+        "assumed_upstream_length_m": 0.02,
+        "kinetic_reference_temperature_K": 298.15,
+        "anode_EG_reference_mol_m3": 1000,
+        "scope": "engineering applicability screen; entrance correlation is approximate, not geometric/experimental validation",
+        "flow_mode_validation": "declared-fully-developed-family"
+      },
+      "native_model_sha256": "1369f32a9611f981e1ae8e76ab84e7ec835f61d3eaa3c28a650af61563507ff4",
+      "source_java_sha256": "fca34ce62ff8dbc4284b94e4474d35c05cf1cacebc6715b8f8b9d32d7499dec6",
+      "config_sha256": "a7ce78831aad32403334664205fde74c9da5fb222a217f75de186738ff8e0add",
+      "native_fields_sha256": "f9e5e47688f35e5a0b0c6b116011f852eb8fccf3d44e13204f7efe96fabd38a0",
+      "native_plot_status": "saved"
+    },
+    {
+      "run": "audit-2d-fine",
+      "status": "native-spatial-solve-and-readback-passed",
+      "interface_version": "spatial-2",
+      "dimension": 2,
+      "mesh": {
+        "axial_elements": 60,
+        "gap_elements": 36,
+        "span_elements": 15,
+        "gap_ratio": 20
+      },
+      "metrics": {
+        "Qin_m3_s": 6.666666666666662e-07,
+        "Qout_m3_s": 6.666666666667012e-07,
+        "I_anode_A": 0.07332340888663935,
+        "I_cathode_A": -0.07332340888663935,
+        "EG_surface_min_mol_m3": 882.7574627984058,
+        "EG_surface_max_mol_m3": 1000.0,
+        "j_anode_min_A_m2": 729.3521557209211,
+        "j_anode_max_A_m2": 748.0925192191388,
+        "pressure_drop_Pa": 11.200000000000335,
+        "EG_consumption_mol_s": 1.7573695330132561e-07,
+        "GLY_generation_mol_s": 1.5198871636871413e-07,
+        "FMA_generation_mol_s": 3.7997179092178546e-08,
+        "OX_generation_mol_s": 4.749647386522317e-09,
+        "EG_net_boundary_out_mol_s": -1.7540016312975193e-07,
+        "GLY_net_boundary_out_mol_s": 1.5169456333618056e-07,
+        "FMA_net_boundary_out_mol_s": 3.792379386848323e-08,
+        "OX_net_boundary_out_mol_s": 4.74045510425705e-09
+      },
+      "checks": {
+        "flow_relative_residual": 5.256898228897001e-14,
+        "flow_command_relative_residual": 5.177488890091911e-14,
+        "current_relative_residual": 0.0,
+        "EG_faradaic_relative_residual": 1.054351140901908e-15,
+        "EG_mass_relative_residual": 0.0019164448071215495,
+        "GLY_faradaic_relative_residual": 5.224686457147848e-16,
+        "GLY_mass_relative_residual": 0.0019353609896933142,
+        "FMA_faradaic_relative_residual": 1.741562152382616e-16,
+        "FMA_mass_relative_residual": 0.0019313334686580149,
+        "OX_faradaic_relative_residual": 5.224686457147848e-16,
+        "OX_mass_relative_residual": 0.0019353609893969002,
+        "carbon_relative_residual": 1.848077488365568e-05,
+        "save_reopen_max_scaled_difference": 0.0,
+        "save_reopen_max_tolerance_ratio": 0.0,
+        "save_reopen_relative_tolerance": 1e-08,
+        "save_reopen_absolute_tolerance_SI": 1e-14,
+        "field_save_reopen_max_scaled_difference": 0.0,
+        "field_save_reopen_max_tolerance_ratio": 0.0,
+        "field_save_reopen_relative_tolerance": 1e-08,
+        "field_save_reopen_absolute_tolerance_SI": 1e-14
+      },
+      "field_checks": {
+        "exported_points": 2257,
+        "species_min_mol_m3": {
+          "EG": 882.7574627984058,
+          "GLY": -0.00659421248347148,
+          "FMA": -0.0023348975871330035,
+          "OX": -0.0002060691385683322
+        },
+        "species_max_mol_m3": {
+          "EG": 1000.0084113160548,
+          "GLY": 117.60498015837987,
+          "FMA": 20.2726316969392,
+          "OX": 3.675155630033083
+        },
+        "anode_kinetic_field_relative_residual": 2.730195291826262e-16,
+        "maximum_product_charge_equivalent_fraction_of_support": 0.14522792311538524,
+        "support_electrolyte_approximation_warning": true,
+        "support_fraction_screen_note": "0.1 is an engineering review indicator, not a validated accuracy threshold; no spatial ionic balance is solved"
+      },
+      "applicability": {
+        "mean_velocity_m_s": 0.06666666666666667,
+        "hydraulic_diameter_m": 0.0018181818181818184,
+        "Reynolds_number": 90.04329004329004,
+        "laminar_screen_limit": 2000,
+        "entrance_length_estimate_m": 0.008185753640299097,
+        "assumed_upstream_length_m": 0.02,
+        "kinetic_reference_temperature_K": 298.15,
+        "anode_EG_reference_mol_m3": 1000,
+        "scope": "engineering applicability screen; entrance correlation is approximate, not geometric/experimental validation",
+        "flow_mode_validation": "declared-fully-developed-family"
+      },
+      "native_model_sha256": "a4cda8795abf7ee143a9999dafb948da30b800267773e512781fcbe8c8798d86",
+      "source_java_sha256": "d1ec9c455743b86752678264650f563c29fe2ac0918fc182b18a503497b2fb72",
+      "config_sha256": "ca050ba1df26e6f7627ce054f0b8331d9a1b086bfb3e76d53eccaa013e6d2ee2",
+      "native_fields_sha256": "61cabd9c7d3bd9df6fdfd0cf8ec8fe12459c91bd78978a7f28e890f4354936f4",
+      "native_plot_status": "saved"
+    },
+    {
+      "run": "audit-2d-half-feed",
+      "status": "native-spatial-solve-and-readback-passed",
+      "interface_version": "spatial-2",
+      "dimension": 2,
+      "mesh": {
+        "axial_elements": 40,
+        "gap_elements": 24,
+        "span_elements": 10,
+        "gap_ratio": 20
+      },
+      "metrics": {
+        "Qin_m3_s": 6.666666666666667e-07,
+        "Qout_m3_s": 6.6666666666667e-07,
+        "I_anode_A": 0.06535799709922407,
+        "I_cathode_A": -0.06535799709922407,
+        "EG_surface_min_mol_m3": 395.8554421059727,
+        "EG_surface_max_mol_m3": 500.0,
+        "j_anode_min_A_m2": 646.737600341928,
+        "j_anode_max_A_m2": 678.5457822236635,
+        "pressure_drop_Pa": 11.200000000000369,
+        "EG_consumption_mol_s": 1.5664595329783444e-07,
+        "GLY_generation_mol_s": 1.354775812305594e-07,
+        "FMA_generation_mol_s": 3.3869395307639866e-08,
+        "OX_generation_mol_s": 4.2336744134549815e-09,
+        "EG_net_boundary_out_mol_s": -1.5613812068750176e-07,
+        "GLY_net_boundary_out_mol_s": 1.350295092502066e-07,
+        "FMA_net_boundary_out_mol_s": 3.375574240327791e-08,
+        "OX_net_boundary_out_mol_s": 4.219672164298542e-09
+      },
+      "checks": {
+        "flow_relative_residual": 4.923379005915621e-15,
+        "flow_command_relative_residual": 4.923379005915621e-15,
+        "current_relative_residual": 0.0,
+        "EG_faradaic_relative_residual": 0.0,
+        "EG_mass_relative_residual": 0.003241913369872548,
+        "GLY_faradaic_relative_residual": 7.815250128107876e-16,
+        "GLY_mass_relative_residual": 0.0033073514915376782,
+        "FMA_faradaic_relative_residual": 5.861437596080906e-16,
+        "FMA_mass_relative_residual": 0.0033556224824692663,
+        "OX_faradaic_relative_residual": 7.815250128107876e-16,
+        "OX_mass_relative_residual": 0.003307351437309221,
+        "carbon_relative_residual": 7.065660570635102e-05,
+        "save_reopen_max_scaled_difference": 0.0,
+        "save_reopen_max_tolerance_ratio": 0.0,
+        "save_reopen_relative_tolerance": 1e-08,
+        "save_reopen_absolute_tolerance_SI": 1e-14,
+        "field_save_reopen_max_scaled_difference": 0.0,
+        "field_save_reopen_max_tolerance_ratio": 0.0,
+        "field_save_reopen_relative_tolerance": 1e-08,
+        "field_save_reopen_absolute_tolerance_SI": 1e-14
+      },
+      "field_checks": {
+        "exported_points": 1025,
+        "species_min_mol_m3": {
+          "EG": 395.8554421059727,
+          "GLY": -0.00018393909096010605,
+          "FMA": -5.548804786093851e-06,
+          "OX": -5.748096675819533e-06
+        },
+        "species_max_mol_m3": {
+          "EG": 500.00000001294336,
+          "GLY": 104.47142207346725,
+          "FMA": 18.00625666780238,
+          "OX": 3.2647319398945642
+        },
+        "anode_kinetic_field_relative_residual": 2.532059354693443e-16,
+        "maximum_product_charge_equivalent_fraction_of_support": 0.12900714262105875,
+        "support_electrolyte_approximation_warning": true,
+        "support_fraction_screen_note": "0.1 is an engineering review indicator, not a validated accuracy threshold; no spatial ionic balance is solved"
+      },
+      "applicability": {
+        "mean_velocity_m_s": 0.06666666666666667,
+        "hydraulic_diameter_m": 0.0018181818181818184,
+        "Reynolds_number": 90.04329004329004,
+        "laminar_screen_limit": 2000,
+        "entrance_length_estimate_m": 0.008185753640299097,
+        "assumed_upstream_length_m": 0.02,
+        "kinetic_reference_temperature_K": 298.15,
+        "anode_EG_reference_mol_m3": 1000,
+        "scope": "engineering applicability screen; entrance correlation is approximate, not geometric/experimental validation",
+        "flow_mode_validation": "declared-fully-developed-family"
+      },
+      "native_model_sha256": "c02b135249919a78f54b57f6d1696008d3798cf38c5ba6c7f3acc8c4541e6d15",
+      "source_java_sha256": "88e57ec791dd60f1eb0e30968924694f1808d2e5a32d7e00a83c564c66abdad8",
+      "config_sha256": "565e7c631d6fe840d5aad855a3eeb47b4b965547aad8c3ac7bad44e6e0e5f8b7",
+      "native_fields_sha256": "ac74c904093ad565f74a8bf926631309238a8833798189baf6902296f3298cb6",
+      "native_plot_status": "saved"
+    },
+    {
+      "run": "audit-3d-base",
+      "status": "native-spatial-solve-and-readback-passed",
+      "interface_version": "spatial-2",
+      "dimension": 3,
+      "mesh": {
+        "axial_elements": 40,
+        "gap_elements": 24,
+        "span_elements": 10,
+        "gap_ratio": 20
+      },
+      "metrics": {
+        "Qin_m3_s": 6.666666666666702e-07,
+        "Qout_m3_s": 6.666666666666638e-07,
+        "I_anode_A": 0.07331032146944143,
+        "I_cathode_A": -0.07331032146861025,
+        "EG_surface_min_mol_m3": 784.0570028173983,
+        "EG_surface_max_mol_m3": 1000.0,
+        "j_anode_min_A_m2": 706.6196501412732,
+        "j_anode_max_A_m2": 748.82917039139,
+        "pressure_drop_Pa": 11.955177254397874,
+        "EG_consumption_mol_s": 1.7570558619960655e-07,
+        "GLY_generation_mol_s": 1.519615880645248e-07,
+        "FMA_generation_mol_s": 3.79903970161312e-08,
+        "OX_generation_mol_s": 4.7487996270164e-09,
+        "EG_net_boundary_out_mol_s": -1.7564017287449978e-07,
+        "GLY_net_boundary_out_mol_s": 1.5190237890215163e-07,
+        "FMA_net_boundary_out_mol_s": 3.797727042713953e-08,
+        "OX_net_boundary_out_mol_s": 4.7469493406922385e-09
+      },
+      "checks": {
+        "flow_relative_residual": 9.529120656610879e-15,
+        "flow_command_relative_residual": 5.241016361135983e-15,
+        "current_relative_residual": 1.1337862507121867e-11,
+        "EG_faradaic_relative_residual": 3.0129696128871457e-16,
+        "EG_mass_relative_residual": 0.00037228938772871566,
+        "GLY_faradaic_relative_residual": 1.2193111402152668e-15,
+        "GLY_mass_relative_residual": 0.00038963242703172785,
+        "FMA_faradaic_relative_residual": 1.3934984459603052e-15,
+        "FMA_mass_relative_residual": 0.000345523869784788,
+        "OX_faradaic_relative_residual": 1.2193111402152668e-15,
+        "OX_mass_relative_residual": 0.00038963242703172785,
+        "carbon_relative_residual": 1.2574546626184992e-05,
+        "save_reopen_max_scaled_difference": 0.0,
+        "save_reopen_max_tolerance_ratio": 0.0,
+        "save_reopen_relative_tolerance": 1e-08,
+        "save_reopen_absolute_tolerance_SI": 1e-14,
+        "field_save_reopen_max_scaled_difference": 0.0,
+        "field_save_reopen_max_tolerance_ratio": 0.0,
+        "field_save_reopen_relative_tolerance": 1e-08,
+        "field_save_reopen_absolute_tolerance_SI": 1e-14
+      },
+      "field_checks": {
+        "exported_points": 11275,
+        "species_min_mol_m3": {
+          "EG": 784.0570028173983,
+          "GLY": -0.001747408435536991,
+          "FMA": -0.0007024144507257556,
+          "OX": -5.4606513610531233e-05
+        },
+        "species_max_mol_m3": {
+          "EG": 1000.002565531514,
+          "GLY": 220.73587485674253,
+          "FMA": 36.319675025427806,
+          "OX": 6.8979960892732075
+        },
+        "anode_kinetic_field_relative_residual": 7.701365817339482e-16,
+        "maximum_product_charge_equivalent_fraction_of_support": 0.27085154206071677,
+        "support_electrolyte_approximation_warning": true,
+        "support_fraction_screen_note": "0.1 is an engineering review indicator, not a validated accuracy threshold; no spatial ionic balance is solved"
+      },
+      "applicability": {
+        "mean_velocity_m_s": 0.06666666666666667,
+        "hydraulic_diameter_m": 0.0018181818181818184,
+        "Reynolds_number": 90.04329004329004,
+        "laminar_screen_limit": 2000,
+        "entrance_length_estimate_m": 0.008185753640299097,
+        "assumed_upstream_length_m": 0.02,
+        "kinetic_reference_temperature_K": 298.15,
+        "anode_EG_reference_mol_m3": 1000,
+        "scope": "engineering applicability screen; entrance correlation is approximate, not geometric/experimental validation",
+        "flow_mode_validation": "declared-fully-developed-family"
+      },
+      "native_model_sha256": "64bfb4d1aa4367308430925dd0a1960e75492f9fffd4c9f0a48f59392f1f8015",
+      "source_java_sha256": "ddbd7b0feb544dac7cc7e0594d888d9fbca3b69a965ab9bb055b205da651528a",
+      "config_sha256": "1063f0084331ae663eeed8ca644d7fb37b433a18afe697dfbb0593cdaf60fba1",
+      "native_fields_sha256": "7b81b1955bf78025568162e299977c81e673ebf315c9cd7c53e3acd5c6502ada",
+      "native_plot_status": "saved"
+    },
+    {
+      "run": "audit-3d-coarse",
+      "status": "native-spatial-solve-and-readback-passed",
+      "interface_version": "spatial-2",
+      "dimension": 3,
+      "mesh": {
+        "axial_elements": 30,
+        "gap_elements": 18,
+        "span_elements": 8,
+        "gap_ratio": 20
+      },
+      "metrics": {
+        "Qin_m3_s": 6.666666666666671e-07,
+        "Qout_m3_s": 6.666666666666669e-07,
+        "I_anode_A": 0.07331107328682591,
+        "I_cathode_A": -0.07331107328603423,
+        "EG_surface_min_mol_m3": 780.1135556658018,
+        "EG_surface_max_mol_m3": 1000.0,
+        "j_anode_min_A_m2": 705.5951523237596,
+        "j_anode_max_A_m2": 748.7339465553611,
+        "pressure_drop_Pa": 11.9583985907643,
+        "EG_consumption_mol_s": 1.7570738810841824e-07,
+        "GLY_generation_mol_s": 1.519631464721452e-07,
+        "FMA_generation_mol_s": 3.799078661803631e-08,
+        "OX_generation_mol_s": 4.748848327254537e-09,
+        "EG_net_boundary_out_mol_s": -1.7559856501096933e-07,
+        "GLY_net_boundary_out_mol_s": 1.5186543622113593e-07,
+        "FMA_net_boundary_out_mol_s": 3.796713336098089e-08,
+        "OX_net_boundary_out_mol_s": 4.745794881910498e-09
+      },
+      "checks": {
+        "flow_relative_residual": 3.1763735522036263e-16,
+        "flow_command_relative_residual": 6.352747104407253e-16,
+        "current_relative_residual": 1.0798998371977978e-11,
+        "EG_faradaic_relative_residual": 1.205175485750843e-15,
+        "EG_mass_relative_residual": 0.0006193427528599625,
+        "GLY_faradaic_relative_residual": 3.3095248690736037e-15,
+        "GLY_mass_relative_residual": 0.0006429864955919624,
+        "FMA_faradaic_relative_residual": 2.9611538302237506e-15,
+        "FMA_mass_relative_residual": 0.0006226050882608263,
+        "OX_faradaic_relative_residual": 3.3095248690736037e-15,
+        "OX_mass_relative_residual": 0.0006429864955919624,
+        "carbon_relative_residual": 2.1440347346882608e-05,
+        "save_reopen_max_scaled_difference": 0.0,
+        "save_reopen_max_tolerance_ratio": 0.0,
+        "save_reopen_relative_tolerance": 1e-08,
+        "save_reopen_absolute_tolerance_SI": 1e-14,
+        "field_save_reopen_max_scaled_difference": 0.0,
+        "field_save_reopen_max_tolerance_ratio": 0.0,
+        "field_save_reopen_relative_tolerance": 1e-08,
+        "field_save_reopen_absolute_tolerance_SI": 1e-14
+      },
+      "field_checks": {
+        "exported_points": 5301,
+        "species_min_mol_m3": {
+          "EG": 780.1135556658018,
+          "GLY": -2.9419602947724565e-06,
+          "FMA": -0.001103758598662187,
+          "OX": -9.193625921163962e-08
+        },
+        "species_max_mol_m3": {
+          "EG": 1000.0019150358032,
+          "GLY": 224.59848696082136,
+          "FMA": 36.966283111567186,
+          "OX": 7.018702717525666
+        },
+        "anode_kinetic_field_relative_residual": 6.320413414694425e-16,
+        "maximum_product_charge_equivalent_fraction_of_support": 0.2756021755074399,
+        "support_electrolyte_approximation_warning": true,
+        "support_fraction_screen_note": "0.1 is an engineering review indicator, not a validated accuracy threshold; no spatial ionic balance is solved"
+      },
+      "applicability": {
+        "mean_velocity_m_s": 0.06666666666666667,
+        "hydraulic_diameter_m": 0.0018181818181818184,
+        "Reynolds_number": 90.04329004329004,
+        "laminar_screen_limit": 2000,
+        "entrance_length_estimate_m": 0.008185753640299097,
+        "assumed_upstream_length_m": 0.02,
+        "kinetic_reference_temperature_K": 298.15,
+        "anode_EG_reference_mol_m3": 1000,
+        "scope": "engineering applicability screen; entrance correlation is approximate, not geometric/experimental validation",
+        "flow_mode_validation": "declared-fully-developed-family"
+      },
+      "native_model_sha256": "93803a8e365df3ae2a2010df0c43f6bcc4440a5f66f3aef41e7298076008f93d",
+      "source_java_sha256": "f35a159470e0327c551aec83907303c4adc96937dc6137b6465d1babff31593e",
+      "config_sha256": "45a6db4497eba20ff8b642fce3ceefd25d974f0c5300796c2558dbab3b4f5615",
+      "native_fields_sha256": "8b559a5333eab1daa8b4eff11193811bc46b1cf98cb3ef571c0975a1bdd299c3",
+      "native_plot_status": "saved"
+    }
+  ],
+  "reviews": {
+    "analytic-2d": {
+      "status": "independent-analytic-check-passed",
+      "fields": {
+        "exported_points": 1025,
+        "species_min_mol_m3": {
+          "EG": 882.8441402737603,
+          "GLY": -0.00020781402292501243,
+          "FMA": -6.950905009823467e-06,
+          "OX": -6.4941882526444106e-06
+        },
+        "species_max_mol_m3": {
+          "EG": 1000.0000000137461,
+          "GLY": 117.52392279803036,
+          "FMA": 20.255841136542617,
+          "OX": 3.6726225874416705
+        },
+        "anode_kinetic_field_relative_residual": 2.479337192201945e-16,
+        "maximum_product_charge_equivalent_fraction_of_support": 0.1451250091094563,
+        "support_electrolyte_approximation_warning": true,
+        "support_fraction_screen_note": "0.1 is an engineering review indicator, not a validated accuracy threshold; no spatial ionic balance is solved"
+      },
+      "velocity_max_abs_error_m_s": 5.370703881624195e-15,
+      "velocity_max_error_relative_to_mean": 8.056055822436292e-14,
+      "pressure_drop_analytic_Pa": 11.2,
+      "pressure_drop_relative_error": 3.298948416029037e-14,
+      "declared_numerical_limits": {
+        "velocity_error_relative_to_mean": 0.01,
+        "pressure_drop_relative_error": 0.005
+      },
+      "analytic_basis": "2D Poiseuille parabola or 3D rectangular-duct Fourier series, odd modes below 160; independent of native scalar PDE discretization",
+      "engineering_acceptance": "not-assessed"
+    },
+    "analytic-3d": {
+      "status": "independent-analytic-check-passed",
+      "fields": {
+        "exported_points": 11275,
+        "species_min_mol_m3": {
+          "EG": 784.0570028173983,
+          "GLY": -0.001747408435536991,
+          "FMA": -0.0007024144507257556,
+          "OX": -5.4606513610531233e-05
+        },
+        "species_max_mol_m3": {
+          "EG": 1000.002565531514,
+          "GLY": 220.73587485674253,
+          "FMA": 36.319675025427806,
+          "OX": 6.8979960892732075
+        },
+        "anode_kinetic_field_relative_residual": 7.701365817339482e-16,
+        "maximum_product_charge_equivalent_fraction_of_support": 0.27085154206071677,
+        "support_electrolyte_approximation_warning": true,
+        "support_fraction_screen_note": "0.1 is an engineering review indicator, not a validated accuracy threshold; no spatial ionic balance is solved"
+      },
+      "velocity_max_abs_error_m_s": 0.0001321960459252855,
+      "velocity_max_error_relative_to_mean": 0.0019829406888792825,
+      "pressure_drop_analytic_Pa": 11.953359114852255,
+      "pressure_drop_relative_error": 0.00015210281295410357,
+      "declared_numerical_limits": {
+        "velocity_error_relative_to_mean": 0.01,
+        "pressure_drop_relative_error": 0.005
+      },
+      "analytic_basis": "2D Poiseuille parabola or 3D rectangular-duct Fourier series, odd modes below 160; independent of native scalar PDE discretization",
+      "engineering_acceptance": "not-assessed"
+    },
+    "mesh-2d": {
+      "status": "mesh-comparison-within-declared-limits",
+      "relative_limit": 0.02,
+      "differences": {
+        "I_anode_A": 3.344703157302132e-05,
+        "EG_surface_min_mol_m3": 9.818945634263231e-05,
+        "j_anode_max_A_m2": 0.00012618516831963076,
+        "GLY_generation_mol_s": 3.344703157319639e-05,
+        "pressure_drop_Pa": 3.013462495411049e-15
+      },
+      "coarse_mesh": {
+        "axial_elements": 40,
+        "gap_elements": 24,
+        "span_elements": 10,
+        "gap_ratio": 20
+      },
+      "fine_mesh": {
+        "axial_elements": 60,
+        "gap_elements": 36,
+        "span_elements": 15,
+        "gap_ratio": 20
+      },
+      "scope": "numerical convergence only; not experimental validation"
+    },
+    "mesh-3d": {
+      "status": "mesh-comparison-within-declared-limits",
+      "relative_limit": 0.02,
+      "differences": {
+        "I_anode_A": 1.0255273328737137e-05,
+        "EG_surface_min_mol_m3": 0.005029541394855578,
+        "j_anode_max_A_m2": 0.00012716363063042152,
+        "GLY_generation_mol_s": 1.0255273324183591e-05,
+        "pressure_drop_Pa": 0.00026945115893126337
+      },
+      "coarse_mesh": {
+        "axial_elements": 30,
+        "gap_elements": 18,
+        "span_elements": 8,
+        "gap_ratio": 20
+      },
+      "fine_mesh": {
+        "axial_elements": 40,
+        "gap_elements": 24,
+        "span_elements": 10,
+        "gap_ratio": 20
+      },
+      "scope": "numerical convergence only; not experimental validation"
+    }
+  },
+  "concentration_sensitivity": {
+    "feed_base_mol_m3": 1000,
+    "feed_half_mol_m3": 500,
+    "fixed_kinetic_reference_mol_m3": 1000,
+    "base_current_A": 0.07332586133701142,
+    "half_feed_current_A": 0.06535799709922407,
+    "current_relative_change": -0.10866376599609817,
+    "boundary": "Transport coefficients, apparent kinetics and FE held fixed to isolate concentration-law binding; not a measured prediction."
+  },
+  "functional_source_sha256": {
+    "skills/ai-comsol-skill/scripts/comsol_native.py": "93e4b633753854477d187272bc9731cfb040ffcc08a145a3e52c7edf01edf8a1",
+    "skills/ai-comsol-skill/scripts/electrosynthesis.py": "7e85ee302f35ad07946d70755c5fc228ce3ff6b3d31d3b08602e439830d8b3fb",
+    "skills/ai-comsol-skill/scripts/numerical_checks.py": "2f56cfcb654a73e57baf165756c53eed15af1c74cde80689084bb73376818588",
+    "skills/ai-comsol-skill/scripts/reaction_core.py": "b616ab9aee1f088225e254726bcf6676c90e01ec80a8338e23fc655a4e79f8cd",
+    "skills/ai-comsol-skill/scripts/run_dwsim_properties.py": "b3f6dc5597d60ad6ce7e128a1c388a7ff447a0f1e1dd8daa91dff79697cd580c",
+    "skills/ai-comsol-skill/scripts/spatial_contract.py": "ad05bc86d657c769033465aae455b16edb3623901c85128b7b9fbf4e5323d638",
+    "skills/ai-comsol-skill/scripts/spatial_reactor.py": "43e7694fb0c02914cc34ed607487e7e93c9720ab00cf5efbcea74dd9aafac9bf",
+    "skills/ai-comsol-skill/scripts/spatial_review.py": "6a8b258bdb0dfb4c23d47be762dc5967f948ecf8a2acc0a18e75af777860bb45",
+    "skills/ai-comsol-skill/scripts/test_model_audit.py": "45a668154059c5c6883805afe27ce8e998c75bd1ac7372e8a9fabd39cf72e2e2",
+    "skills/ai-comsol-skill/scripts/test_reaction_model.py": "2c2d94d058361e11bf3c9a00e0a2ff17a5f0a4e4a10161c74fc4536a33596db6",
+    "skills/ai-comsol-skill/scripts/test_spatial_inputs.py": "47f3dbf9f32f97960ed8a659cedb5db1123902634757b7e2cefe814a305c28ec",
+    "skills/ai-comsol-skill/scripts/test_workspace.py": "88f664129a9497805cf2469df3b6bce404a000e6fa77b286b3226af2894d7bfe",
+    "skills/ai-comsol-skill/scripts/workspace.py": "7bc26fbd73f722747bf06e3798ea55a628e36a557fab9ee8a76f750dda79594d"
+  },
+  "evidence_retention": "Native models/tables/config snapshots under local AGENTCODING/07_handoff/model-audit-20261027; logs under AGENTCODING/05_qa. Public package has no dependency on these local evidence files."
+}

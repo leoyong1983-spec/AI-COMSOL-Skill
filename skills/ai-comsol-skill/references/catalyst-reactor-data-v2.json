@@ -4,6 +4,18 @@
   "purpose": "可用于空间情景的催化剂/反应器/动力学证据，非项目设计冻结",
   "sources": [
     {
+      "id": "S26_ENTRANCE",
+      "url": "https://www.comsol.com/blogs/how-to-place-inlet-and-outlet-boundary-conditions-in-cfd-simulations",
+      "title": "How to Place Inlet and Outlet Boundary Conditions in CFD Simulations",
+      "kind": "official-method-guidance",
+      "grade": "B",
+      "access": "official indexed text checked 2026-10-27; laminar entrance relation L=0.05Dh(U Dh/nu)",
+      "license": "COMSOL copyrighted documentation; link and original summary only, no bundled article",
+      "relation_to_comsol_runtime": "adjacent method guidance; does not validate this reactor or geometry",
+      "adoption_decision": "use 0.05 Re Dh as an explicitly approximate engineering screen for sufficient upstream length",
+      "boundary": "pipe correlation extended using hydraulic diameter to rectangular channel; no resolved entrance validation; Re<2000 is a conservative engineering screening choice"
+    },
+    {
       "id": "S24",
       "doi": "10.1038/s41467-024-47179-7",
       "url": "https://www.nature.com/articles/s41467-024-47179-7",

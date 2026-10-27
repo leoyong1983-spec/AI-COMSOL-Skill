@@ -4,30 +4,21 @@ import argparse,json,math,os,subprocess,sys,csv,hashlib
 from datetime import datetime,timezone
 from reaction_core import InputError,owned_path,F
 from comsol_native import jstr,jarray,decode
+from numerical_checks import verify_readback
+from spatial_contract import validate_spatial,applicability,anode_current_density,conservation_checks
 
 SPECIES=("EG","GLY","FMA","OX")
 from workspace import bind_workspace, comsol_install
 def load_config(path, project_root=None):
  c=json.loads(Path(path).read_text(encoding="utf-8-sig"))
  c=bind_workspace(c, project_root)
- if c.get("dimension") not in (2,3):raise InputError("dimension must be2or3")
- if c.get("flow_model") not in ("fully-developed-poiseuille","navier-stokes"):raise InputError("explicit supported flow_model required")
- for group in ("geometry","operation","properties","kinetics","mesh","solver"):
-  if not isinstance(c.get(group),dict):raise InputError("missing "+group)
-  for key,value in c[group].items():
-   if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value):raise InputError("nonfinite input "+key)
-   if key not in ("anode_metal_potential_V_RHE","cathode_metal_potential_V_RHE","anode_anchor_potential_V_RHE") and value<=0:raise InputError("nonpositive "+key)
- if c["geometry"]["gap_m"]>=min(c["geometry"]["length_m"],c["geometry"]["width_m"]):raise InputError("unsupported non-channel geometry")
- if any(c["mesh"][k]!=int(c["mesh"][k]) for k in ("axial_elements","gap_elements","span_elements")):raise InputError("mesh counts must be integers")
- if set(c.get("faradaic_efficiency",{}))!=set(SPECIES[1:]):raise InputError("all carbon branch FE must be explicit")
- if any(not isinstance(v,(int,float)) or not math.isfinite(v) or v<0 for v in c["faradaic_efficiency"].values()) or abs(sum(c["faradaic_efficiency"].values())-1)>1e-10:raise InputError("branch FE must be nonnegative and sum to1")
- if not c.get("assumptions") or not c.get("provenance"):raise InputError("assumption and provenance records required")
- return c
+ return validate_spatial(c)
 
 def generate(c,out):
  d=c["dimension"];bd=d-1;depth="W" if d==2 else "1";fd=c.get("flow_model")=="fully-developed-poiseuille"
  p={"L":f'{c["geometry"]["length_m"]}[m]',"H":f'{c["geometry"]["gap_m"]}[m]',"W":f'{c["geometry"]["width_m"]}[m]',"Q":f'{c["operation"]["flow_m3_s"]}[m^3/s]',"cin":f'{c["operation"]["feed_EG_mol_m3"]}[mol/m^3]',"Tiso":f'{c["operation"]["temperature_K"]}[K]',"Ea":f'{c["operation"]["anode_metal_potential_V_RHE"]}[V]',"Ec":f'{c["operation"]["cathode_metal_potential_V_RHE"]}[V]',"rho_liq":f'{c["properties"]["density_kg_m3"]}[kg/m^3]',"mu_liq":f'{c["properties"]["viscosity_Pa_s"]}[Pa*s]',"kappa":f'{c["properties"]["conductivity_S_m"]}[S/m]',"Fnum":f"{F}[C/mol]","ja_ref":f'{c["kinetics"]["anode_anchor_current_A_m2"]}[A/m^2]',"Ea_ref":f'{c["kinetics"]["anode_anchor_potential_V_RHE"]}[V]',"ba":f'{c["kinetics"]["anode_tafel_V_dec"]}[V]',"mEG":str(c["kinetics"]["EG_reaction_order"]),"jc_ref":f'{c["kinetics"]["cathode_anchor_current_A_m2"]}[A/m^2]',"ec_ref":f'{c["kinetics"]["cathode_anchor_overpotential_V"]}[V]',"bc":f'{c["kinetics"]["cathode_tafel_V_dec"]}[V]'}
  for n in SPECIES:p["D"+n]=f'{c["properties"][n+"_diffusivity_m2_s"]}[m^2/s]'
+ p["cEGref"]=f'{c["kinetics"]["anode_EG_reference_mol_m3"]}[mol/m^3]'
  for n in SPECIES[1:]:p["fe"+n]=str(c["faradaic_efficiency"][n])
  ratio=c["geometry"]["gap_m"]/c["geometry"]["width_m"]
  p["f_rect"]=str(1-192*ratio/math.pi**5*sum(math.tanh(n*math.pi/(2*ratio))/n**5 for n in range(1,80,2)) if d==3 else 1)
@@ -73,7 +64,7 @@ def generate(c,out):
   line(f'System.out.println("SELECTION {tag} "+Arrays.toString(m.component("comp1").selection("{tag}").entities({bd})));')
   line(f'if(m.component("comp1").selection("{tag}").entities({bd}).length!=1)throw new RuntimeException("Wrong entity count: {tag}");')
  line('m.component("comp1").variable().create("v1");')
- variables={"j_an":"ja_ref*(cEG/cin)^mEG*10^((Ea-phil-Ea_ref)/ba)","j_ca":"-jc_ref*10^((phil-Ec-ec_ref)/bc)","rEG":"j_an/Fnum*(feGLY/4+feFMA/6+feOX/8)","rGLY":"j_an*feGLY/(4*Fnum)","rFMA":"2*j_an*feFMA/(6*Fnum)","rOX":"j_an*feOX/(8*Fnum)"}
+ variables={"j_an":"ja_ref*(cEG/cEGref)^mEG*10^((Ea-phil-Ea_ref)/ba)","j_ca":"-jc_ref*10^((phil-Ec-ec_ref)/bc)","rEG":"j_an/Fnum*(feGLY/4+feFMA/6+feOX/8)","rGLY":"j_an*feGLY/(4*Fnum)","rFMA":"2*j_an*feFMA/(6*Fnum)","rOX":"j_an*feOX/(8*Fnum)"}
  variables.update({"uF":f'wfd*Q/(intin(wfd)*{depth})',"vF":"0[m/s]","wF":"0[m/s]","pF":f'12*mu_liq*Q/(W*H^3*f_rect)*(H*W)/(intin(wfd)*{depth})*(L-x)' } if fd else {"uF":"u","vF":"v","wF":"w" if d==3 else "0[m/s]","pF":"p"})
  variables["speedF"]="sqrt(uF^2+vF^2+wF^2)"
  for key,val in variables.items():line(f'm.component("comp1").variable("v1").set({jstr(key)},{jstr(val)});')
@@ -231,6 +222,7 @@ def generate(c,out):
  line('ModelUtil.remove("EGSpatial");')
  line(f'm=ModelUtil.load("Reopened",{jstr(out/"reactor_spatial.mph")});')
  table("recheck",out/"native_reopened_metrics.csv")
+ line(f'm.result().export("fields").set("filename",{jstr(out/"native_reopened_fields.txt")});m.result().export("fields").run();')
  line('System.out.println("SPATIAL_SAVED_REOPENED");return m;}public static void main(String[] a)throws Exception{run();}}')
  return "\n".join(lines),list(metrics)
 
@@ -239,26 +231,43 @@ def numeric_table(path,n):
  for row in csv.reader(decode(path).splitlines()):
   if not row or row[0].lstrip().startswith("%"):continue
   try:vals=[float(x) for x in row]
-  except ValueError:continue
-  if len(vals)==n:rows.append(vals)
+  except ValueError:raise InputError("invalid native metric row")
+  if len(vals)!=n:raise InputError("native metric width mismatch")
+  rows.append(vals)
  if len(rows)!=1 or not all(math.isfinite(v) for v in rows[0]):raise InputError("native metric width/count/nonfinite")
  return rows[0]
 
-def field_checks(path,dimension,feed):
+def field_rows(path,dimension):
  values=[]
  for row in decode(path).splitlines():
   if not row.strip() or row.lstrip().startswith("%"):continue
   try:nums=[float(x) for x in row.split()]
-  except ValueError:continue
+  except ValueError:raise InputError("invalid native field row")
   if len(nums)!=dimension+8 or not all(math.isfinite(x) for x in nums):raise InputError("field width or finite-value check failed")
   values.append(nums)
  if not values:raise InputError("empty native field export")
+ return values
+
+def field_checks(path,dimension,feed,config=None):
+ values=field_rows(path,dimension)
  result={"exported_points":len(values),"species_min_mol_m3":{n:min(row[dimension+i] for row in values) for i,n in enumerate(SPECIES)},"species_max_mol_m3":{n:max(row[dimension+i] for row in values) for i,n in enumerate(SPECIES)}}
  if result["species_min_mol_m3"]["EG"]<=0 or result["species_max_mol_m3"]["EG"]>feed*1.005:raise InputError("EG maximum principle or positivity violated")
  if any(v < -feed*1e-5 for v in result["species_min_mol_m3"].values()):raise InputError("negative species field beyond numerical tolerance")
+ if config:
+  error=0.0
+  for row in values:
+   expected=anode_current_density(config,row[dimension],row[dimension+6])
+   error=max(error,abs(row[dimension+7]-expected)/max(abs(expected),1e-12))
+  if error>1e-7:raise InputError("exported current disagrees with fixed-reference kinetic law")
+  result["anode_kinetic_field_relative_residual"]=error
+  fraction=max((row[dimension+1]+row[dimension+2]+2*row[dimension+3])/config["operation"]["support_electrolyte_mol_m3"] for row in values)
+  result["maximum_product_charge_equivalent_fraction_of_support"]=fraction
+  result["support_electrolyte_approximation_warning"]=fraction>.1
+  result["support_fraction_screen_note"]="0.1 is an engineering review indicator, not a validated accuracy threshold; no spatial ionic balance is solved"
  return result
 
 def run(c,out,install,timeout=1200):
+ validate_spatial(c)
  root=Path(c["project_root"]);out=owned_path(root,out,"07_handoff")
  if out.exists():raise InputError("choose a new result directory")
  work=owned_path(root,root/"AGENTCODING/04_work/comsol_spatial_runtime"/out.name)
@@ -285,22 +294,16 @@ def run(c,out,install,timeout=1200):
    proc.wait(timeout=30)
    raise InputError("native timeout; owned process tree terminated; see "+str(qa))
   p=proc
- needed=["native_metrics.csv","native_reopened_metrics.csv","reactor_spatial.mph","native_fields.txt"]
+ needed=["native_metrics.csv","native_reopened_metrics.csv","reactor_spatial.mph","native_fields.txt","native_reopened_fields.txt"]
  if p.returncode or any(not (out/n).is_file() or not (out/n).stat().st_size for n in needed):raise InputError("native solve/save/export/reopen incomplete; "+str(qa))
  values=numeric_table(out/"native_metrics.csv",len(labels));reread=numeric_table(out/"native_reopened_metrics.csv",len(labels))
- diff=max(abs(a-b)/max(1,abs(a)) for a,b in zip(values,reread))
- if diff>1e-8:raise InputError("saved model readback mismatch")
+ readback=verify_readback([values],[reread])
+ field_readback=verify_readback(field_rows(out/"native_fields.txt",c["dimension"]),field_rows(out/"native_reopened_fields.txt",c["dimension"]))
  v=dict(zip(labels,values));ia=v["I_anode_A"]
- fields=field_checks(out/"native_fields.txt",c["dimension"],c["operation"]["feed_EG_mol_m3"])
- checks={"flow_relative_residual":abs(v["Qin_m3_s"]-v["Qout_m3_s"])/abs(v["Qin_m3_s"]),"current_relative_residual":abs(ia+v["I_cathode_A"])/abs(ia),"save_reopen_max_scaled_difference":diff}
- for n in SPECIES:
-  generation=-v["EG_consumption_mol_s"] if n=="EG" else v[n+"_generation_mol_s"]
-  checks[n+"_mass_relative_residual"]=abs(v[n+"_net_boundary_out_mol_s"]-generation)/max(abs(generation),1e-15)
- checks["carbon_relative_residual"]=abs(2*v["EG_net_boundary_out_mol_s"]+2*v["GLY_net_boundary_out_mol_s"]+v["FMA_net_boundary_out_mol_s"]+2*v["OX_net_boundary_out_mol_s"])/(2*v["EG_consumption_mol_s"])
- if min(ia,v["Qin_m3_s"],v["EG_surface_min_mol_m3"])<=0:raise InputError("nonphysical current/flow/surface concentration")
- if checks["flow_relative_residual"]>1e-3 or checks["current_relative_residual"]>1e-3 or any(checks[n+"_mass_relative_residual"]>.02 for n in SPECIES):raise InputError("spatial conservation limits exceeded: "+str(checks))
+ fields=field_checks(out/"native_fields.txt",c["dimension"],c["operation"]["feed_EG_mol_m3"],c)
+ checks={**conservation_checks(c,v),**readback,**{"field_"+k:v for k,v in field_readback.items()}}
  card={"schema_version":1,"case_id":c["case_id"],"dimension":c["dimension"],"status":"native-spatial-solve-and-readback-passed","flow_model":c["flow_model"],"model_scope":"fully-developed Stokes-Poiseuille velocity PDE with integral flow normalization + passive dilute organic transport + secondary current distribution, membrane-free planar channel" if c["flow_model"]=="fully-developed-poiseuille" else "Navier-Stokes + passive dilute organic transport + secondary current distribution","engineering_acceptance":"not-assessed","project_experimental_calibration":"not-performed","metrics":v,"checks":checks,"field_checks":fields,"assumptions":c["assumptions"],"provenance":c["provenance"],"mesh":c["mesh"],"native_model_sha256":hashlib.sha256((out/"reactor_spatial.mph").read_bytes()).hexdigest(),"source_java_sha256":hashlib.sha256(source.read_bytes()).hexdigest(),"evidence_directory":str(qa),"created_utc":datetime.now(timezone.utc).isoformat()}
- card.update({"artifact_type":"spatial-reactor-result","interface_version":"spatial-1","data_status":c["data_status"],"config_sha256":hashlib.sha256((out/"config_used.json").read_bytes()).hexdigest(),"numerical_scheme":{"species":"quadratic SUPG","crosswind_species":c["dimension"]==2},"native_plot_status":"warning" if "NATIVE_PLOT_WARNING" in decode(qa/"launcher.log") else "saved"})
+ card.update({"artifact_type":"spatial-reactor-result","interface_version":"spatial-2","applicability":applicability(c),"data_status":c["data_status"],"config_sha256":hashlib.sha256((out/"config_used.json").read_bytes()).hexdigest(),"native_fields_sha256":hashlib.sha256((out/"native_fields.txt").read_bytes()).hexdigest(),"numerical_scheme":{"species":"quadratic SUPG","crosswind_species":c["dimension"]==2},"native_plot_status":"warning" if "NATIVE_PLOT_WARNING" in decode(qa/"launcher.log") else "saved"})
  (out/"result_card.json").write_text(json.dumps(card,ensure_ascii=False,indent=2),encoding="utf-8")
  return card
 
@@ -311,12 +314,13 @@ def main():
  try:
   c=load_config(a.config,a.project_root)
   if a.dimension:c["dimension"]=a.dimension
-  if a.mesh_factor<=0:raise InputError("positive mesh-factor required")
+  if not math.isfinite(a.mesh_factor) or a.mesh_factor<=0:raise InputError("positive finite mesh-factor required")
   for k in ("axial_elements","gap_elements","span_elements"):c["mesh"][k]=max(4,round(c["mesh"][k]*a.mesh_factor))
   if a.flow_ml_min is not None:
    if not math.isfinite(a.flow_ml_min) or a.flow_ml_min<=0:raise InputError("positive flow required")
    c["operation"]["flow_m3_s"]=a.flow_ml_min*1e-6/60
-  if a.command=="validate":print(json.dumps({"status":"input-checked","dimension":c["dimension"],"experimental_calibration":False}));return
+  validate_spatial(c)
+  if a.command=="validate":print(json.dumps({"status":"input-checked","dimension":c["dimension"],"applicability":applicability(c),"experimental_calibration":False}));return
   if not a.out:raise InputError("--out required")
   target=owned_path(c["project_root"],a.out,"07_handoff");is_new=not target.exists()
   card=run(c,target,comsol_install(a.comsol_root))

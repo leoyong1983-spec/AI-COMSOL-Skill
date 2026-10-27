@@ -32,8 +32,9 @@ def publish(reactor,rows,output,native_evidence=None,agreement=None):
       "element_balance_max_abs_mol_atoms":max(abs(v) for x in checks for v in x["element_balance_mol_atoms"].values()),
       "bulk_charge_max_abs_mol_charge_m3":max(abs(v) for x in checks for v in x["bulk_charge_mol_charge_m3"].values()),
       "electrode_current_max_abs_residual_A":max(abs(v) for x in checks for v in x["electrode_current_residual_A"].values()),
+      "cumulative_electrode_charge_max_relative_residual":max(v for x in checks for v in x["cumulative_electrode_charge_relative_residual"].values()),
       "minimum_liquid_concentration_mol_m3":min(x["minimum_liquid_concentration_mol_m3"] for x in checks)}
-    tolerances={"species_balance_max_abs_mol":2e-6,"element_balance_max_abs_mol_atoms":1e-5,"bulk_charge_max_abs_mol_charge_m3":1e-3,"electrode_current_max_abs_residual_A":1e-8}
+    tolerances={"species_balance_max_abs_mol":2e-6,"element_balance_max_abs_mol_atoms":1e-5,"bulk_charge_max_abs_mol_charge_m3":1e-3,"electrode_current_max_abs_residual_A":1e-8,"cumulative_electrode_charge_max_relative_residual":1e-7}
     if any(envelope[k]>limit for k,limit in tolerances.items()) or envelope["minimum_liquid_concentration_mol_m3"] < -1e-7:
         write_json(output/"failed-balance-checks.json",{"checks":envelope,"limits":tolerances})
         raise InputError("mass/charge/current/nonnegativity check failed")
@@ -45,7 +46,6 @@ def publish(reactor,rows,output,native_evidence=None,agreement=None):
         comp=c["compartments"][pool]
         streams.append({"stream_id":pool+"_liquid","state":"inventory-and-net-outlet","temperature_K":c["temperature_K"],"volume_m3":comp["volume_m3"],"net_outlet_m3_s":comp["flow_m3_s"],"true_species_mol_m3":{n:reactor.value(last,("c",pool,n)) for n in reactor.liquid},"cumulative_outlet_mol":{n:reactor.value(last,("out",pool,n)) for n in reactor.liquid},"cumulative_gas_mol":{n:reactor.value(last,("gas",pool,n)) for n in reactor.gas}})
     summary={"schema_version":1,"case_id":c["case_id"],"run_id":output.name,"project_id":c["project_id"],"created_utc":datetime.now(timezone.utc).isoformat(),"data_status":c["data_status"],"purpose":c["purpose"],"solver":"COMSOL native Global ODE/DAE" if native_evidence else "independent Python RK4 reference","model_scope":"0D isothermal, fully mixed, forward Tafel or prescribed FE; no resolved spatial fields","project_experimental_calibration":"not-performed-no-project-experimental-data","engineering_acceptance":"not-assessed","elapsed_model_time_s":last_t,"checks":envelope,"check_limits_for_software_validation":tolerances,"last_point":checks[-1],"streams":streams,"native_evidence":native_evidence,"independent_reference_agreement":agreement,"provenance":c.get("provenance"),"assumptions":c["assumptions"],"not_available":["local current/flow/temperature fields","validated lifetime/deactivation","plant net energy/TEA/LCA","product purity after separation"]}
-    write_json(output/"result_card.json",summary)
     write_json(output/"config_used.json",c)
     config_hash=hashlib.sha256((output/"config_used.json").read_bytes()).hexdigest()
     summary["config_sha256"]=config_hash
@@ -74,17 +74,19 @@ def run(config,out,install,native,project_root=None):
     if native:
         table,labels,evidence=run_native(model,out,install)
         if len(table)!=len(reference):raise InputError("native/reference time-grid mismatch")
-        rows=[];error=0.0;jerror=0.0
+        rows=[];error=0.0;jerror=0.0;state_ratio=0.0;current_ratio=0.0
         for data,(time,yref) in zip(table,reference):
             if abs(data[0]-time)>1e-6:raise InputError("native time grid differs")
             y=data[1:1+len(model.keys)];rows.append((data[0],y))
             error=max(error,max(abs(a-b)/max(1,abs(b)) for a,b in zip(y,yref)))
+            state_ratio=max(state_ratio,max(abs(a-b)/(1e-9+5e-5*max(abs(a),abs(b))) for a,b in zip(y,yref)))
             actual_j=model.current_densities(y)[0]
             for r in model.c["reactions"]:
                 col=labels.index("j_A_m2|"+r["id"])
                 jerror=max(jerror,abs(data[col]-actual_j[r["id"]])/max(1,abs(actual_j[r["id"]])))
-        agreement={"state_max_scaled_difference":error,"native_current_max_scaled_difference":jerror,"limit":5e-5}
-        if error>5e-5 or jerror>5e-5:raise InputError("native solver disagrees with independent current roots/RK4")
+                current_ratio=max(current_ratio,abs(data[col]-actual_j[r["id"]])/(1e-8+5e-5*max(abs(data[col]),abs(actual_j[r["id"]]))))
+        agreement={"state_max_scaled_difference":error,"native_current_max_scaled_difference":jerror,"relative_tolerance":5e-5,"state_absolute_tolerance_SI":1e-9,"current_density_absolute_tolerance_A_m2":1e-8,"state_max_tolerance_ratio":state_ratio,"current_max_tolerance_ratio":current_ratio}
+        if state_ratio>1 or current_ratio>1:raise InputError("native solver disagrees with independent current roots/RK4")
         return publish(model,rows,out,evidence,agreement)
     if out.exists():raise InputError("output directory already exists")
     out.mkdir(parents=True)

@@ -1,7 +1,8 @@
 {
   "schema_version": 1,
   "model_family": "membrane-free-planar-fully-developed",
-  "date": "2026-10-26",
+  "date": "2026-10-27",
+  "result_interface_version": "spatial-2",
   "kinetic_anchor_note": "apparent iR-uncorrected literature proxy; not project calibration",
   "geometry_hypothesis": {
     "active_length_m": 0.01,
@@ -32,9 +33,26 @@
     "maximum_EG_over_feed_factor": 1.005,
     "allowed_negative_product_abs_mol_m3": "1e-5 * feedEG",
     "flow_relative_residual": 0.001,
+    "flow_command_relative_residual": 0.001,
     "current_relative_residual": 0.001,
     "species_flux_relative_residual": 0.02,
-    "save_reopen_scaled_difference": 1e-8
+    "carbon_relative_residual": 0.02,
+    "faradaic_rate_absolute_plus_relative": "1e-14 mol/s + 1e-8 * abs(expected rate)",
+    "save_reopen_relative_tolerance": 1e-8,
+    "save_reopen_absolute_tolerance_SI": 1e-14,
+    "save_reopen_coverage": "all integral metrics and exported field values/coordinates; per-value scale",
+    "anode_kinetic_field_relative_residual": 1e-7,
+    "analytic_velocity_error_relative_to_mean": 0.01,
+    "analytic_pressure_drop_relative_error": 0.005
+  },
+  "applicability": {
+    "anode_reference_EG_mol_m3": 1000,
+    "reference_independent_of_feed": true,
+    "temperature_matches_kinetic_reference": true,
+    "Reynolds_upper_exclusive_screen": 2000,
+    "minimum_upstream_length_approximation": "0.05 * Re * Dh; engineering screen from laminar entrance correlation",
+    "product_charge_equivalent_to_support_warning_above": 0.1,
+    "warning_meaning": "review passive-ion/constant-support approximation; not an experimental accuracy threshold"
   },
   "mesh_comparison": {
     "outputs": [
@@ -45,6 +63,8 @@
       "pressuredrop"
     ],
     "default_relative_limit": 0.02,
+    "requirements": "current passing native cards, unchanged artifact hashes, matching physics and solver settings, increased active mesh counts with no coarsening; 2D span-only changes do not count",
+    "failure_exit_code": 2,
     "claim_boundary": "report individual differences; no automatic validation of untested geometries"
   }
 }

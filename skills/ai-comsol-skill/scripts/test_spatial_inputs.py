@@ -3,7 +3,7 @@ import unittest,copy,json
 from pathlib import Path
 from unittest.mock import patch
 from spatial_reactor import load_config,field_checks
-from spatial_review import compare
+from spatial_review import compare_data
 from reaction_core import InputError
 CFG=Path(__file__).resolve().parents[1]/"assets/spatial_pdnimoo4.json"
 def config():return json.loads(CFG.read_text(encoding="utf-8"))
@@ -31,6 +31,5 @@ class SpatialGuards(unittest.TestCase):
  def test_mesh_comparison_rejects_changed_operating_condition(self):
   a=config();b=copy.deepcopy(a);b["operation"]["flow_m3_s"]*=2
   card={"metrics":{}}
-  with patch("spatial_review.read",side_effect=[card,card,a,b]):
-   with self.assertRaisesRegex(InputError,"identical physical"):compare("coarse","fine")
+  with self.assertRaisesRegex(InputError,"identical physical"):compare_data(card,card,a,b)
 if __name__=="__main__":unittest.main(verbosity=2)

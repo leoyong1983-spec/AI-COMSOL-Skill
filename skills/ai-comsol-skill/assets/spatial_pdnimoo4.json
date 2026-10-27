@@ -8,14 +8,16 @@
   "geometry": {
     "length_m": 0.01,
     "gap_m": 0.001,
-    "width_m": 0.01
+    "width_m": 0.01,
+    "upstream_straight_length_m": 0.02
   },
   "operation": {
     "temperature_K": 298.15,
     "flow_m3_s": 6.666666666666667e-07,
     "anode_metal_potential_V_RHE": 0.79,
     "cathode_metal_potential_V_RHE": -0.12,
-    "feed_EG_mol_m3": 1000
+    "feed_EG_mol_m3": 1000,
+    "support_electrolyte_mol_m3": 1000
   },
   "properties": {
     "density_kg_m3": 1040,
@@ -28,6 +30,8 @@
   },
   "kinetics": {
     "anode_anchor_current_A_m2": 1000,
+    "anode_EG_reference_mol_m3": 1000,
+    "reference_temperature_K": 298.15,
     "anode_anchor_potential_V_RHE": 0.79,
     "anode_tafel_V_dec": 0.2077,
     "EG_reaction_order": 0.3,
@@ -50,6 +54,7 @@
     "relative_tolerance": 1e-06
   },
   "assumptions": [
+    "Kinetic concentration reference stays at the source 1M EG condition when inlet EG is varied. The 298.15K reference is a room-temperature scenario assumption; temperature extrapolation is blocked until matched kinetic and transport data are supplied.",
     "Validated default uses a native fully-developed Stokes-Poiseuille scalar velocity PDE, followed by transport/current coupling. It does not resolve entrance/manifold flow. An upstream straight section at least20mm is assumed; estimated laminar entrance length is~8mm for the baseline. General Navier-Stokes coupling remains experimental and failed conservation checks in early attempts.",
     "Rectangular membrane-free planar channel 10mm x 10mm footprint, 1mm gap; area consistent with published flow cell; gap and rectangular internal details are design hypotheses, not reconstructed hardware.",
     "Pd/NiMoO4/NF apparent anode anchor 100mA/cm2 at0.79VvsRHE and207.7mV/dec from Shi2024. Source curves have no iR compensation; applying them as a local boundary law is an apparent proxy and may double-count unseparated reference ohmic loss. Not intrinsic parameter identification.",

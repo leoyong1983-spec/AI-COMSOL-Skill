@@ -7,6 +7,7 @@ import os
 import subprocess
 from pathlib import Path
 from reaction_core import Reactor, InputError, F, R, SIDES, pools, pool_for, owned_path
+from numerical_checks import verify_readback
 
 def jstr(s):return json.dumps(str(s),ensure_ascii=True)
 def jarray(values):return "new String[]{"+",".join(jstr(s) for s in values)+"}"
@@ -103,7 +104,7 @@ def parse_table(path,labels):
     for row in csv.reader(decode(path).splitlines()):
         if not row or row[0].lstrip().startswith("%"):continue
         try:values=[float(v) for v in row]
-        except ValueError:continue
+        except ValueError:raise InputError("invalid numerical row in native table")
         if len(values)==len(labels)+1:values=values[1:] # COMSOL adds its own time column.
         if len(values)!=len(labels):raise InputError("unexpected native table width")
         if not all(math.isfinite(v) for v in values):raise InputError("nonfinite native result")
@@ -144,7 +145,5 @@ def run_native(reactor,output,install,timeout=300):
     if r.returncode or any(not p.is_file() or p.stat().st_size==0 for p in needed):
         raise InputError("COMSOL did not produce all solved/readback artifacts; exit status alone is insufficient: "+str(qa))
     native=parse_table(needed[1],labels);reopened=parse_table(needed[2],labels)
-    if len(native)!=len(reopened):raise InputError("save/reopen changed row count")
-    reopen_error=max(abs(a-b)/max(1,abs(a)) for ra,rb in zip(native,reopened) for a,b in zip(ra,rb))
-    if reopen_error>1e-8:raise InputError("save/reopen numerical mismatch")
-    return native,labels,{"comsol_exit_code":r.returncode,"save_reopen_max_scaled_difference":reopen_error,"evidence_directory":str(qa),"native_model":str(needed[0]),"generated_java":str(source),"install":str(install)}
+    readback=verify_readback(native,reopened)
+    return native,labels,{"comsol_exit_code":r.returncode,**readback,"evidence_directory":str(qa),"native_model":str(needed[0]),"generated_java":str(source),"install":str(install)}

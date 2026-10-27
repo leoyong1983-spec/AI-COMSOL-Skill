@@ -7,7 +7,7 @@
     "comsol": "6.4.0.429",
     "dwsim": "9.0.5.0"
   },
-  "scope": "Current public controllers executed locally; numerical verification of declared models only. Native files and private logs are intentionally not redistributed.",
+  "scope": "Historical initial release at commit 2451312, executed locally; not evidence for later changed controllers. See model-audit.json for corrected models. Numerical verification only; native files and local logs are not redistributed.",
   "behavioral_tests": {
     "count": 26,
     "requires_comsol": false,
